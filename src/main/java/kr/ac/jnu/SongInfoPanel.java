@@ -2,12 +2,13 @@ package kr.ac.jnu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class SongInfoPanel extends JPanel {
     private JLabel labelSongInfo;
     private JButton btnStart;
-    private String currentSongName; // 현재 노래 제목을 저장하는 멤버 변수
     private final int imageWidth = 1100;  // 기본 이미지 너비 설정
     private final int imageHeight = 650; // 기본 이미지 높이 설정
 
@@ -16,12 +17,11 @@ public class SongInfoPanel extends JPanel {
         setOpaque(false); // 패널을 투명하게 설정
 
         btnStart = new JButton();
-        setButtonGraphics(btnStart, "/Image/Button/gamestart.png", 350, 120);
-        btnStart.setBounds(950, 650, 350, 120);
+        setButtonGraphics(btnStart, "/Image/Button/startgame.png", 360, 110);
+        btnStart.setBounds(970, 640, 360, 110);
         btnStart.addActionListener(e -> {
-            WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(SongInfoPanel.this);
-            MainPanel mainPanel = (MainPanel) wordPopcorn.getCardPanel().getComponent(3); // 인덱스 3은 MainPanel 의미합니다.
-            mainPanel.setMain(currentSongName);
+            WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
+            ((MainPanel) wordPopcorn.getCardPanel().getComponent(3)).setMain(wordPopcorn.getCurrentSongName());
             wordPopcorn.showCard("MainPanel");
         });
 
@@ -33,10 +33,10 @@ public class SongInfoPanel extends JPanel {
     }
 
     public void setSongInfo(String songName) {
-        this.currentSongName = songName; // 멤버 변수에 노래 제목 저장
-        ImageIcon songInfoIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Songinfo/songinfo_" + songName + ".png")));
-        labelSongInfo.setIcon(resizeImageIcon(songInfoIcon, imageWidth, imageHeight));
+        ImageIcon iconSonginfo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Songinfo/songinfo_" + songName + ".png")));
+        labelSongInfo.setIcon(resizeImageIcon(iconSonginfo, imageWidth, imageHeight));
     }
+
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
         Image newimg = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH); // 넘겨받은 width와 height를 사용하여 크기를 조정합니다.

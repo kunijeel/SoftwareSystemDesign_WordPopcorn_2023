@@ -1,2 +1,8 @@
-package kr.ac.jnu;public class HintPanel {
+package kr.ac.jnu;
+
+import javax.swing.*;
+
+public class HintPanel extends JPanel {
+
+
 }

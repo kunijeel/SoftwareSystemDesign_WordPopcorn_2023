@@ -15,12 +15,12 @@ public class InitialPanel extends JPanel {
         btnAccess = new JButton();
         setButtonGraphics(btnAccess, "/Image/Button/access.png", 440, 130); // 먼저 아이콘을 설정
         btnAccess.setBounds(480, 480, 440, 130); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
-        btnAccess.addActionListener(e -> ((WordPopcorn)SwingUtilities.getWindowAncestor(InitialPanel.this)).showCard("SongSelectPanel"));
+        btnAccess.addActionListener(e -> ((WordPopcorn)SwingUtilities.getWindowAncestor(this)).showCard("SongSelectPanel"));
 
         // 나가기 버튼
         btnExit = new JButton();
         setButtonGraphics(btnExit, "/Image/Button/exit.png", 440, 130); // 먼저 아이콘을 설정
-        btnExit.setBounds(480, 600, 440, 130); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
+        btnExit.setBounds(480, 620, 440, 130); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
         btnExit.addActionListener(e -> {
             // 프로그램 종료
             System.exit(0);

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WordPopcorn extends JFrame {
+    private String currentSongName; // 현재 노래 제목을 저장하는 변수
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel cardPanel; // 이제 cardPanel을 클래스의 필드로 선언하였습니다.
 
@@ -26,10 +27,12 @@ public class WordPopcorn extends JFrame {
         SongSelectPanel songSelectPanel = new SongSelectPanel(); // SongSelectPanel 인스턴스 생성
         SongInfoPanel songInfoPanel = new SongInfoPanel();
         MainPanel mainPanel = new MainPanel();
+        HintPanel hintPanel = new HintPanel();
         cardPanel.add(initialPanel, "InitialPanel");
         cardPanel.add(songSelectPanel, "SongSelectPanel"); // cardPanel에 SongSelectPanel 추가
         cardPanel.add(songInfoPanel, "SongInfoPanel");
         cardPanel.add(mainPanel, "MainPanel");
+        cardPanel.add(hintPanel, "HintPanel");
 
         // 레이어드 팬에 배경 패널과 카드 패널을 추가
         layeredPane.add(backgroundPanel, Integer.valueOf(1)); // 배경은 레이어 1에 추가
@@ -41,6 +44,12 @@ public class WordPopcorn extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    public void setCurrentSongName(String name) {
+        this.currentSongName = name;
+    }
+    public String getCurrentSongName() {
+        return this.currentSongName;
     }
     public void showCard(String cardName) {
         cardLayout.show(cardPanel, cardName);
