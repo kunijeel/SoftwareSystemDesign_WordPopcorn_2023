@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class MainPanel extends JPanel {
+    private AudioPlayer player = new AudioPlayer();
     private String currentSongName;
     private JLabel labelBoard, labelRound;
     private JButton btnPlaySong, btnSubmit;
@@ -22,6 +23,16 @@ public class MainPanel extends JPanel {
         btnPlaySong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    if (!player.isPlaying()) {
+                        player.load("/Sound/music_" + currentSongName + ".wav");
+                        player.play();
+                    } else {
+                        player.stop(); // 이미 재생 중이면 정지
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace(); // 오류 출력
+                }
             }
         });
 
