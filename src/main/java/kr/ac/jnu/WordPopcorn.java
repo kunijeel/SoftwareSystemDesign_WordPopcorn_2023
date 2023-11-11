@@ -28,6 +28,7 @@ public class WordPopcorn extends JFrame {
         SongInfoPanel songInfoPanel = new SongInfoPanel();
         MainPanel mainPanel = new MainPanel();
         HintPanel hintPanel = new HintPanel();
+        GradingPanel gradingPanel = new GradingPanel();
         SuccessPanel successPanel = new SuccessPanel();
         FailPanel failPanel = new FailPanel();
         cardPanel.add(initialPanel, "InitialPanel");
@@ -35,6 +36,7 @@ public class WordPopcorn extends JFrame {
         cardPanel.add(songInfoPanel, "SongInfoPanel");
         cardPanel.add(mainPanel, "MainPanel");
         cardPanel.add(hintPanel, "HintPanel");
+        cardPanel.add(gradingPanel, "GradingPanel");
         cardPanel.add(successPanel, "SuccessPanel");
         cardPanel.add(failPanel, "FailPanel");
 

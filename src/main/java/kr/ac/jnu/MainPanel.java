@@ -41,18 +41,24 @@ public class MainPanel extends JPanel {
             // 먼저, 노래가 재생 중인지 확인합니다.
             if (!player.isPlaying()) {
                 if (roundsPlayed[currentRound]) { // 해당 라운드의 노래를 이미 들었는지 확인합니다.
-                    if (checkAnswer()) {
-                        ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("SuccessPanel");
-                    } else {
-                        // 오답 처리
-                        boolean isLastRound = currentRound == roundsPlayed.length - 1;
-                        updateFailPanel(isLastRound);
-                        ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("FailPanel");
-                        if (!isLastRound) {
-                            // 마지막 라운드가 아니면 다음 라운드로 넘어갑니다.
-                            currentRound++; // 다음 라운드로 이동
+                    ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("GradingPanel");
+
+                    Timer timer = new Timer(4000, event -> {
+                        if (checkAnswer()) {
+                            ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("SuccessPanel");
+                        } else {
+                            // 오답 처리
+                            boolean isLastRound = currentRound == roundsPlayed.length - 1;
+                            updateFailPanel(isLastRound);
+                            ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("FailPanel");
+                            if (!isLastRound) {
+                                // 마지막 라운드가 아니면 다음 라운드로 넘어갑니다.
+                                currentRound++; // 다음 라운드로 이동
+                            }
                         }
-                    }
+                    });
+                    timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정합니다.
+                    timer.start(); // 타이머 시작
                 } else {
                     // 해당 라운드의 노래를 아직 듣지 않았으므로 메시지를 표시합니다.
                     JOptionPane.showMessageDialog(MainPanel.this, "이 라운드의 노래를 먼저 들어야 합니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
@@ -99,13 +105,13 @@ public class MainPanel extends JPanel {
 
     private void updateFailPanel(boolean lastRound) {
         WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
-        FailPanel failPanel = ((FailPanel) wordPopcorn.getCardPanel().getComponent(6));
+        FailPanel failPanel = ((FailPanel) wordPopcorn.getCardPanel().getComponent(7));
         failPanel.updateForRoundStatus(!lastRound); // 마지막 라운드가 아니면 true, 마지막 라운드면 false
     }
 
     private boolean checkAnswer() {
         // 정답 확인 로직
-        return false;
+        return true;
     }
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
