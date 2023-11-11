@@ -41,8 +41,11 @@ public class MainPanel extends JPanel {
             // 먼저, 노래가 재생 중인지 확인합니다.
             if (!player.isPlaying()) {
                 if (roundsPlayed[currentRound]) { // 해당 라운드의 노래를 이미 들었는지 확인합니다.
-                    // 노래가 끝났고, 해당 라운드의 노래를 들었으므로 HintPanel로 이동합니다.
-                    ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("HintPanel");
+                    if (checkAnswer()) {
+                        ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("SuccessPanel");
+                    } else {
+
+                    }
                 } else {
                     // 해당 라운드의 노래를 아직 듣지 않았으므로 메시지를 표시합니다.
                     JOptionPane.showMessageDialog(MainPanel.this, "이 라운드의 노래를 먼저 들어야 합니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
@@ -89,7 +92,7 @@ public class MainPanel extends JPanel {
 
     private boolean checkAnswer() {
         // 정답 확인 로직
-        return false; // 임시로 항상 'false'를 반환하는 예시 코드
+        return true; // 임시로 항상 'true'를 반환하는 예시 코드
     }
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));

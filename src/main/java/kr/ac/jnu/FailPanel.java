@@ -9,16 +9,21 @@ public class FailPanel extends JPanel {
         setLayout(null);
         setOpaque(false);
 
-        JButton btnback = new JButton();
-        setButtonGraphics(btnback,"/Image/Button/back.png", 330, 95);
-        btnback.setBounds(990, 655, 330, 90);
+        JButton btnBack = new JButton();
+        setButtonGraphics(btnBack,"/Image/Button/back.png", 330, 95);
+        btnBack.setBounds(990, 655, 330, 90);
+
+        JButton btnSelectHint = new JButton();
+        setButtonGraphics(btnSelectHint,"/Image/Button/selecthint.png", 330, 95);
+        btnSelectHint.setBounds(990, 655, 330, 90);
 
         JLabel labelFail = new JLabel();
         ImageIcon iconFail = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/fail.png")));
         labelFail.setIcon(resizeImageIcon(iconFail, 1050, 700));
         labelFail.setBounds(175, 80, 1050, 700); // x, y 위치와 너비, 높이 설정 (크기 조정된 값을 사용)
 
-        add(btnback);
+        add(btnBack);
+        add(btnSelectHint);
         add(labelFail);
     }
 
