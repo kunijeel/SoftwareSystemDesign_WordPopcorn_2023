@@ -44,7 +44,14 @@ public class MainPanel extends JPanel {
                     if (checkAnswer()) {
                         ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("SuccessPanel");
                     } else {
-
+                        // 오답 처리
+                        boolean isLastRound = currentRound == roundsPlayed.length - 1;
+                        updateFailPanel(isLastRound);
+                        ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("FailPanel");
+                        if (!isLastRound) {
+                            // 마지막 라운드가 아니면 다음 라운드로 넘어갑니다.
+                            currentRound++; // 다음 라운드로 이동
+                        }
                     }
                 } else {
                     // 해당 라운드의 노래를 아직 듣지 않았으므로 메시지를 표시합니다.
@@ -90,9 +97,15 @@ public class MainPanel extends JPanel {
         labelBoard.setIcon(resizeImageIcon(iconMain, imageWidth, imageHeight));
     }
 
+    private void updateFailPanel(boolean lastRound) {
+        WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
+        FailPanel failPanel = ((FailPanel) wordPopcorn.getCardPanel().getComponent(6));
+        failPanel.updateForRoundStatus(!lastRound); // 마지막 라운드가 아니면 true, 마지막 라운드면 false
+    }
+
     private boolean checkAnswer() {
         // 정답 확인 로직
-        return true; // 임시로 항상 'true'를 반환하는 예시 코드
+        return false;
     }
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));

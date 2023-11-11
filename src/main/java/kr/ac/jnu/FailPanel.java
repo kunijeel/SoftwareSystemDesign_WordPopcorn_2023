@@ -2,20 +2,31 @@ package kr.ac.jnu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class FailPanel extends JPanel {
+    private JButton btnSelectHint, btnBack;
     public FailPanel() {
         setLayout(null);
         setOpaque(false);
 
-        JButton btnBack = new JButton();
+        btnBack = new JButton();
         setButtonGraphics(btnBack,"/Image/Button/back.png", 330, 95);
         btnBack.setBounds(990, 655, 330, 90);
+        btnBack.addActionListener(e -> {
+            WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
+            wordPopcorn.showCard("InitialPanel"); // InitialPanel로 이동
+        });
 
-        JButton btnSelectHint = new JButton();
+        btnSelectHint = new JButton();
         setButtonGraphics(btnSelectHint,"/Image/Button/selecthint.png", 330, 95);
         btnSelectHint.setBounds(990, 655, 330, 90);
+        btnSelectHint.addActionListener(e -> {
+            WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
+            wordPopcorn.showCard("HintPanel"); // InitialPanel로 이동
+        });
 
         JLabel labelFail = new JLabel();
         ImageIcon iconFail = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/fail.png")));
@@ -27,6 +38,10 @@ public class FailPanel extends JPanel {
         add(labelFail);
     }
 
+    public void updateForRoundStatus(boolean moreRoundsAvailable) {
+        btnSelectHint.setVisible(moreRoundsAvailable); // 추가 라운드가 있으면 힌트 선택 버튼을 보여줌
+        btnBack.setVisible(!moreRoundsAvailable); // 추가 라운드가 없으면 돌아가기 버튼을 보여줌
+    }
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
         Image newimg = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH); // 넘겨받은 width와 height를 사용하여 크기를 조정합니다.
