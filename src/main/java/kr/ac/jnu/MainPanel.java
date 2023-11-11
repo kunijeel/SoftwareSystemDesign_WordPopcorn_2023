@@ -2,38 +2,40 @@ package kr.ac.jnu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class MainPanel extends JPanel {
+    private String savedLyrics; // 사용자가 저장한 가사를 보관할 변수
     private AudioPlayer player = new AudioPlayer();
     private String currentSongName;
     private JLabel labelBoard, labelRound;
-    private JButton btnPlaySong, btnSubmit;
+    private JButton btnPlaySong, btnSubmit, btnSaveLyrics;
+    private JTextArea answerTextArea;
     private boolean[] roundsPlayed = new boolean[3]; // 3라운드를 위한 재생 여부 배열
     private boolean hintSlow, hintSpacing;
     private int currentRound = 0;
     private final int imageWidth = 1300;  // 기본 이미지 너비 설정
     private final int imageHeight = 500; // 기본 이미지 높이 설정
-    public MainPanel() {
+    public MainPanel() throws IOException, FontFormatException {
         setOpaque(false);
         setLayout(null); // 레이아웃 매니저를 null로 설정
+
+        savedLyrics = ""; // 초기화
 
         btnPlaySong = new JButton();
         setButtonGraphics(btnPlaySong, "/Image/Button/playsong.png", 240, 70); // 먼저 아이콘을 설정
         btnPlaySong.setBounds(1100, 580, 240, 70); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
-        btnPlaySong.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (player.isPlaying()) {
-                    JOptionPane.showMessageDialog(null, "노래가 재생중입니다!");
-                } else {
-                    playRoundSong();
-                }
+        btnPlaySong.addActionListener(e -> {
+            if (player.isPlaying()) {
+                JOptionPane.showMessageDialog(this, "노래가 재생중입니다!");
+            } else {
+                playRoundSong();
             }
         });
 
+        // 제출 버튼
         btnSubmit = new JButton();
         setButtonGraphics(btnSubmit, "/Image/Button/submit.png", 240, 70);
         btnSubmit.setBounds(1100, 670, 240, 70);
@@ -69,6 +71,14 @@ public class MainPanel extends JPanel {
             }
         });
 
+        // 저장 버튼
+        btnSaveLyrics = new JButton();
+        setButtonGraphics(btnSaveLyrics, "/Image/Button/save.png",130, 170);
+        btnSaveLyrics.setBounds(965, 580, 130, 170); // 적절한 위치와 크기 설정
+        btnSaveLyrics.addActionListener(e -> {
+            saveLyrics();
+        });
+
         labelBoard = new JLabel();
         labelBoard.setBounds(50, 50, imageWidth, imageHeight); // x, y 위치와 너비, 높이 설정 (크기 조정된 값을 사용)
 
@@ -77,10 +87,29 @@ public class MainPanel extends JPanel {
         labelRound.setIcon(resizeImageIcon(iconRound, 240, 80));
         labelRound.setBounds(575, 25, 240, 80); // x, y 위치와 너비, 높이 설정 (크기 조정된 값을 사용)
 
+        // JTextArea 생성
+        answerTextArea = new JTextArea();
+        answerTextArea.setLineWrap(true); // 자동 줄바꿈 활성화
+        answerTextArea.setWrapStyleWord(true); // 단어 단위로 줄바꿈
+
+        // JScrollPane에 JTextArea 추가
+        JScrollPane scrollPane = new JScrollPane(answerTextArea);
+        scrollPane.setBounds(140, 585, 800, 150); // JTextArea가 있던 위치와 크기로 설정
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        // 사용자 정의 폰트 적용
+        InputStream is = getClass().getResourceAsStream("/Font/DNFBitBitv2.ttf");
+        Font customFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        customFont = customFont.deriveFont(30f); // 폰트 크기 30f로 설정
+        answerTextArea.setFont(customFont);
+
         add(labelRound);
         add(labelBoard);
         add(btnPlaySong);
         add(btnSubmit);
+        add(btnSaveLyrics);
+        add(scrollPane);
     }
 
     private void playRoundSong() {
@@ -111,7 +140,21 @@ public class MainPanel extends JPanel {
 
     private boolean checkAnswer() {
         // 정답 확인 로직
-        return true;
+        return false;
+    }
+
+    private void saveLyrics() {
+        String lyrics = answerTextArea.getText();
+        if (lyrics.isEmpty()) {
+            // 가사가 비어 있을 경우, 사용자에게 알림
+            JOptionPane.showMessageDialog(this, "가사를 입력해주세요.", "경고", JOptionPane.WARNING_MESSAGE);
+        } else {
+            savedLyrics = lyrics; // 현재 입력 필드의 내용을 저장합니다.
+            answerTextArea.setText(""); // 입력 필드 초기화
+            JOptionPane.showMessageDialog(this, "가사가 저장되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+            // 추가적인 저장 로직 (파일에 저장, 데이터베이스에 저장 등)이 여기에 올 수 있습니다.
+        }
+        //System.out.println(savedLyrics);
     }
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));

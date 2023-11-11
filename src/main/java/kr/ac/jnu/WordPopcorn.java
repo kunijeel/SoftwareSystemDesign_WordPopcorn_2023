@@ -2,13 +2,14 @@ package kr.ac.jnu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class WordPopcorn extends JFrame {
     private String currentSongName; // 현재 노래 제목을 저장하는 변수
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel cardPanel; // 이제 cardPanel을 클래스의 필드로 선언하였습니다.
 
-    public WordPopcorn() {
+    public WordPopcorn() throws IOException, FontFormatException {
         // 레이어드 팬 생성
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(1400, 775)); // 레이어드 팬의 선호 사이즈 설정
@@ -66,7 +67,12 @@ public class WordPopcorn extends JFrame {
     public static void main(String[] args) {
         // GUI 실행
         SwingUtilities.invokeLater(() -> {
-            WordPopcorn frame = new WordPopcorn();
+            WordPopcorn frame = null;
+            try {
+                frame = new WordPopcorn();
+            } catch (IOException | FontFormatException e) {
+                throw new RuntimeException(e);
+            }
             frame.cardLayout.show(frame.cardPanel, "InitialPanel"); // 프로그램 시작 시 InitialPanel 보이기
             frame.setVisible(true);
         });
