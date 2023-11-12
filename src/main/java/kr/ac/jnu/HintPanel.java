@@ -63,6 +63,16 @@ public class HintPanel extends JPanel {
         btnIncorrect = new JButton();
         setButtonGraphics(btnIncorrect, "/Image/Button/incorrect.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정
         btnIncorrect.setBounds(710, 410, hintBtnWidth, hintBtnHeight); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
+        btnIncorrect.addActionListener(e -> {
+            WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
+            MainPanel mainPanel = (MainPanel) wordPopcorn.getCardPanel().getComponent(3); // MainPanel 인덱스에 맞게 조정
+
+            int incorrectCount = mainPanel.getIncorrectAnswersCount();
+            mainPanel.updateRoundLabel();
+            JOptionPane.showMessageDialog(this, "오답의 개수: " + incorrectCount, "오답 정보", JOptionPane.INFORMATION_MESSAGE);
+            wordPopcorn.showCard("MainPanel"); // MainPanel로 전환
+            btnIncorrect.setVisible(false);
+        });
 
         add(btnSpace);
         add(btnChar);

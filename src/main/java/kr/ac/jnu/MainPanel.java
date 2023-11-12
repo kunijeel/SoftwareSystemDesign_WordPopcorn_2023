@@ -150,6 +150,9 @@ public class MainPanel extends JPanel {
     public JButton getBtnPlaySlow() {
         return btnPlaySlow;
     }
+    public int getIncorrectAnswersCount() {
+        return incorrectAnswersCount;
+    }
     public void setMain(String songName) {
         this.currentSongName = songName; // 멤버 변수에 노래 제목 저장
         ImageIcon iconMain = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Board/board_" + songName + ".png")));
