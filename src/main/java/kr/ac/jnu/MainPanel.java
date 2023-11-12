@@ -8,8 +8,10 @@ import java.util.Objects;
 
 public class MainPanel extends JPanel {
     private String savedLyrics; // 사용자가 저장한 가사를 보관할 변수
-    private AudioPlayer player = new AudioPlayer();
+    private int incorrectAnswersCount = 0; // 오답 수 저장 변수
+    private SongLibrary songLibrary; // SongLibrary 객체 선언
     private String currentSongName;
+    private AudioPlayer player = new AudioPlayer();
     private JLabel labelBoard, labelRound;
     private JButton btnPlaySong, btnSubmit, btnSaveLyrics;
     private JTextArea answerTextArea;
@@ -21,6 +23,7 @@ public class MainPanel extends JPanel {
     public MainPanel() throws IOException, FontFormatException {
         setOpaque(false);
         setLayout(null); // 레이아웃 매니저를 null로 설정
+        songLibrary = new SongLibrary(); // SongLibrary 객체 초기화
 
         savedLyrics = ""; // 초기화
 
@@ -43,24 +46,27 @@ public class MainPanel extends JPanel {
             // 먼저, 노래가 재생 중인지 확인합니다.
             if (!player.isPlaying()) {
                 if (roundsPlayed[currentRound]) { // 해당 라운드의 노래를 이미 들었는지 확인합니다.
-                    ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("GradingPanel");
+                    if (savedLyrics.length() == songLibrary.getLyricsByTitle(currentSongName).length()) {
+                        ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("GradingPanel");
 
-                    Timer timer = new Timer(4000, event -> {
-                        if (checkAnswer()) {
-                            ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("SuccessPanel");
-                        } else {
-                            // 오답 처리
-                            boolean isLastRound = currentRound == roundsPlayed.length - 1;
-                            updateFailPanel(isLastRound);
-                            ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("FailPanel");
-                            if (!isLastRound) {
-                                // 마지막 라운드가 아니면 다음 라운드로 넘어갑니다.
-                                currentRound++; // 다음 라운드로 이동
+                        Timer timer = new Timer(4000, event -> {
+                            if (checkAnswer()) {
+                                ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("SuccessPanel");
+                            } else {
+                                // 오답 처리
+                                boolean isLastRound = currentRound == roundsPlayed.length - 1;
+                                updateFailPanel(isLastRound);
+                                ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("FailPanel");
+                                if (!isLastRound) {
+                                    currentRound++;
+                                }
                             }
-                        }
-                    });
-                    timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정합니다.
-                    timer.start(); // 타이머 시작
+                        });
+                        timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정합니다.
+                        timer.start(); // 타이머 시작
+                    } else {
+                        JOptionPane.showMessageDialog(this, "글자 수는 맞게 입력하셔야죠!", "경고", JOptionPane.WARNING_MESSAGE);
+                    }
                 } else {
                     // 해당 라운드의 노래를 아직 듣지 않았으므로 메시지를 표시합니다.
                     JOptionPane.showMessageDialog(MainPanel.this, "이 라운드의 노래를 먼저 들어야 합니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
@@ -76,7 +82,7 @@ public class MainPanel extends JPanel {
         setButtonGraphics(btnSaveLyrics, "/Image/Button/save.png",130, 170);
         btnSaveLyrics.setBounds(965, 580, 130, 170); // 적절한 위치와 크기 설정
         btnSaveLyrics.addActionListener(e -> {
-            saveLyrics();
+            saveLyrics(); // saveLyrics 함수 호출
         });
 
         labelBoard = new JLabel();
@@ -125,7 +131,6 @@ public class MainPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "이 라운드에서는 노래를 이미 들었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
     public void setMain(String songName) {
         this.currentSongName = songName; // 멤버 변수에 노래 제목 저장
         ImageIcon iconMain = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Board/board_" + songName + ".png")));
@@ -139,22 +144,40 @@ public class MainPanel extends JPanel {
     }
 
     private boolean checkAnswer() {
-        // 정답 확인 로직
-        return false;
-    }
+        int counter = 0; // 틀린 문자 수 초기화
+        String correctAnswer = songLibrary.getLyricsByTitle(currentSongName); // 현재 노래의 정답 가사 가져오기
 
-    private void saveLyrics() {
-        String lyrics = answerTextArea.getText();
+        for (int i = 0; i < correctAnswer.length(); i++) {
+            if (savedLyrics.charAt(i) != correctAnswer.charAt(i)) {
+                counter++;
+            }
+        }
+
+        this.incorrectAnswersCount = counter;
+        return savedLyrics.equals(correctAnswer); // 저장된 가사와 정답 가사가 완전히 같은지 비교
+    }
+    private boolean isOnlyKorean(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (!(ch >= '\uAC00' && ch <= '\uD7A3')) {
+                return false; // 한글이 아닌 문자가 포함되어 있습니다.
+            }
+        }
+        return true; // 모든 문자가 한글입니다.
+    }
+    public void saveLyrics() {
+        String lyrics = answerTextArea.getText(); // 텍스트 가져오기
+        lyrics = lyrics.replaceAll("\\s+", ""); // 모든 공백 제거
+
         if (lyrics.isEmpty()) {
-            // 가사가 비어 있을 경우, 사용자에게 알림
             JOptionPane.showMessageDialog(this, "가사를 입력해주세요.", "경고", JOptionPane.WARNING_MESSAGE);
+        } else if (!isOnlyKorean(lyrics)) {
+            JOptionPane.showMessageDialog(this, "가사는 한글로만 구성되어야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
         } else {
-            savedLyrics = lyrics; // 현재 입력 필드의 내용을 저장합니다.
+            this.savedLyrics = lyrics;
             answerTextArea.setText(""); // 입력 필드 초기화
             JOptionPane.showMessageDialog(this, "가사가 저장되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
-            // 추가적인 저장 로직 (파일에 저장, 데이터베이스에 저장 등)이 여기에 올 수 있습니다.
         }
-        //System.out.println(savedLyrics);
     }
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
