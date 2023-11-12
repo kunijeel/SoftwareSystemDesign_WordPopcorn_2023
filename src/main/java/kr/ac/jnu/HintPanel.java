@@ -2,6 +2,8 @@ package kr.ac.jnu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class HintPanel extends JPanel {
@@ -21,10 +23,12 @@ public class HintPanel extends JPanel {
 
             // EditingPanel 표시
             wordPopcorn.showCard("EditingPanel");
+            btnSpace.setVisible(false);
 
             // 4초 후 MainPanel로 전환하는 타이머 설정 및 시작
             Timer timer = new Timer(4000, event -> {
                 mainPanel.updateBoardImage(wordPopcorn.getCurrentSongName()); // board 이미지 업데이트
+                mainPanel.updateRoundLabel();
                 wordPopcorn.showCard("MainPanel"); // MainPanel로 전환
             });
             timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정
@@ -38,6 +42,23 @@ public class HintPanel extends JPanel {
         btnSlow = new JButton();
         setButtonGraphics(btnSlow, "/Image/Button/slow.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정
         btnSlow.setBounds(180, 410, hintBtnWidth, hintBtnHeight); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
+        btnSlow.addActionListener(e -> {
+            WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
+            MainPanel mainPanel = (MainPanel) wordPopcorn.getCardPanel().getComponent(3); // MainPanel 인덱스에 맞게 조정
+
+            // EditingPanel 표시
+            wordPopcorn.showCard("EditingPanel");
+            btnSlow.setVisible(false);
+
+            // 4초 후 MainPanel로 전환하는 타이머 설정 및 시작
+            Timer timer = new Timer(4000, event -> {
+                mainPanel.getBtnPlaySlow().setVisible(true);
+                mainPanel.updateRoundLabel();
+                wordPopcorn.showCard("MainPanel"); // MainPanel로 전환
+            });
+            timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정
+            timer.start(); // 타이머 시작
+        });
 
         btnIncorrect = new JButton();
         setButtonGraphics(btnIncorrect, "/Image/Button/incorrect.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정

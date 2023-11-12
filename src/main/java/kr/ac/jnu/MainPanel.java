@@ -13,7 +13,7 @@ public class MainPanel extends JPanel {
     private String currentSongName;
     private AudioPlayer player = new AudioPlayer();
     private JLabel labelBoard, labelRound;
-    private JButton btnPlaySong, btnSubmit, btnSaveLyrics;
+    private JButton btnPlaySong, btnSubmit, btnSaveLyrics, btnPlaySlow;
     private JTextArea answerTextArea;
     private boolean[] roundsPlayed = new boolean[3]; // 3라운드를 위한 재생 여부 배열
     private boolean hintSlow, hintSpacing;
@@ -90,6 +90,15 @@ public class MainPanel extends JPanel {
             saveLyrics(); // saveLyrics 함수 호출
         });
 
+        btnPlaySlow = new JButton();
+        setButtonGraphics(btnPlaySlow, "/Image/Button/playslow.png", 240, 75);
+        btnPlaySlow.setBounds(1100, 580, 240, 75); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
+        btnPlaySlow.setVisible(false);
+        btnPlaySlow.addActionListener(e -> {
+            btnPlaySlow.setVisible(false);
+        });
+
+
         labelBoard = new JLabel();
         labelBoard.setBounds(50, 50, imageWidth, imageHeight); // x, y 위치와 너비, 높이 설정 (크기 조정된 값을 사용)
 
@@ -117,6 +126,7 @@ public class MainPanel extends JPanel {
 
         add(labelRound);
         add(labelBoard);
+        add(btnPlaySlow);
         add(btnPlaySong);
         add(btnSubmit);
         add(btnSaveLyrics);
@@ -135,6 +145,10 @@ public class MainPanel extends JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "이 라운드에서는 노래를 이미 들었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+
+    public JButton getBtnPlaySlow() {
+        return btnPlaySlow;
     }
     public void setMain(String songName) {
         this.currentSongName = songName; // 멤버 변수에 노래 제목 저장
@@ -191,6 +205,10 @@ public class MainPanel extends JPanel {
         String imagePath = "/Image/Board/sboard_" + songName + ".png";
         ImageIcon iconChangedBoard = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
         labelBoard.setIcon(resizeImageIcon(iconChangedBoard, imageWidth, imageHeight));
+    }
+    public void updateRoundLabel() {
+        ImageIcon iconRound = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/round" + (currentRound + 1) + ".png")));
+        labelRound.setIcon(resizeImageIcon(iconRound, 240, 80));
     }
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
