@@ -51,15 +51,15 @@ public class SongSelectPanel extends JPanel {
 
         // 버튼 초기화 및 위치, 크기 설정
         btnLeft = new JButton();
-        setButtonGraphics(btnLeft, "/Image/Button/left.png", 240, 70); // 버튼에 150x100 크기의 아이콘을 설정합니다.
+        UIUtils.setButtonGraphics(btnLeft, "/Image/Button/left.png", 240, 70); // 버튼에 150x100 크기의 아이콘을 설정합니다.
         btnLeft.setBounds(210, 530, 240, 70); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
 
         btnRight = new JButton();
-        setButtonGraphics(btnRight, "/Image/Button/right.png", 240, 70); // 버튼에 150x100 크기의 아이콘을 설정합니다.
+        UIUtils.setButtonGraphics(btnRight, "/Image/Button/right.png", 240, 70); // 버튼에 150x100 크기의 아이콘을 설정합니다.
         btnRight.setBounds(950, 530, 240, 70); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
 
         btnShowSongInfo = new JButton();
-        setButtonGraphics(btnShowSongInfo, "/Image/Button/showsonginfo.png", 330, 110);
+        UIUtils.setButtonGraphics(btnShowSongInfo, "/Image/Button/showsonginfo.png", 330, 110);
         btnShowSongInfo.setBounds(980, 640, 330, 110);
 
         btnLeft.addActionListener(e -> moveLeft());
@@ -101,25 +101,10 @@ public class SongSelectPanel extends JPanel {
     }
     // 레이블에 이미지 업데이트
     private void updateLabelImages() {
-        labelLeft.setIcon(resizeImageIcon(albumImages[(currentIndex + albumImages.length - 1) % albumImages.length], smallWidth, smallHeight));
-        labelCenter.setIcon(resizeImageIcon(albumImages[currentIndex], largeWidth, largeHeight)); // 중앙 이미지만 크게
-        labelRight.setIcon(resizeImageIcon(albumImages[(currentIndex + 1) % albumImages.length], smallWidth, smallHeight));
+        labelLeft.setIcon(UIUtils.resizeImageIcon(albumImages[(currentIndex + albumImages.length - 1) % albumImages.length], smallWidth, smallHeight));
+        labelCenter.setIcon(UIUtils.resizeImageIcon(albumImages[currentIndex], largeWidth, largeHeight)); // 중앙 이미지만 크게
+        labelRight.setIcon(UIUtils.resizeImageIcon(albumImages[(currentIndex + 1) % albumImages.length], smallWidth, smallHeight));
         // 미리보기 레이블 이미지 업데이트
-        labelPreview.setIcon(resizeImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(albumPreviewPaths[currentIndex]))), 480, 200));
-    }
-    private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
-        Image newimg = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH); // 넘겨받은 width와 height를 사용하여 크기를 조정합니다.
-        icon = new ImageIcon(newimg); // 조정된 이미지로 ImageIcon을 다시 생성합니다.
-
-        button.setIcon(icon);
-        button.setBorderPainted(false); // 버튼 경계를 그리지 않음
-        button.setContentAreaFilled(false); // 내용 영역 배경을 그리지 않음
-        button.setFocusPainted(false); // 선택(포커스)됐을 때 경계를 그리지 않음
-        button.setOpaque(false); // 투명하게 설정
-    }
-    private ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
-        Image resizedImage = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-        return new ImageIcon(resizedImage);
+        labelPreview.setIcon(UIUtils.resizeImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(albumPreviewPaths[currentIndex]))), 480, 200));
     }
 }

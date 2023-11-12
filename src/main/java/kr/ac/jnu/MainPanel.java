@@ -27,7 +27,7 @@ public class MainPanel extends JPanel {
         savedLyrics = ""; // 초기화
 
         btnPlaySong = new JButton();
-        setButtonGraphics(btnPlaySong, "/Image/Button/playsong.png", 240, 70); // 먼저 아이콘을 설정
+        UIUtils.setButtonGraphics(btnPlaySong, "/Image/Button/playsong.png", 240, 70); // 먼저 아이콘을 설정
         btnPlaySong.setBounds(1100, 580, 240, 70); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
         btnPlaySong.addActionListener(e -> {
             if (player.isPlaying()) {
@@ -39,7 +39,7 @@ public class MainPanel extends JPanel {
 
         // 제출 버튼
         btnSubmit = new JButton();
-        setButtonGraphics(btnSubmit, "/Image/Button/submit.png", 240, 70);
+        UIUtils.setButtonGraphics(btnSubmit, "/Image/Button/submit.png", 240, 70);
         btnSubmit.setBounds(1100, 670, 240, 70);
         btnSubmit.addActionListener(e -> {
             // 먼저, 노래가 재생 중인지 확인합니다.
@@ -83,14 +83,14 @@ public class MainPanel extends JPanel {
 
         // 저장 버튼
         btnSaveLyrics = new JButton();
-        setButtonGraphics(btnSaveLyrics, "/Image/Button/save.png",130, 170);
+        UIUtils.setButtonGraphics(btnSaveLyrics, "/Image/Button/save.png",130, 170);
         btnSaveLyrics.setBounds(965, 580, 130, 170); // 적절한 위치와 크기 설정
         btnSaveLyrics.addActionListener(e -> {
             saveLyrics(); // saveLyrics 함수 호출
         });
 
         btnPlaySlow = new JButton();
-        setButtonGraphics(btnPlaySlow, "/Image/Button/playslow.png", 240, 75);
+        UIUtils.setButtonGraphics(btnPlaySlow, "/Image/Button/playslow.png", 240, 75);
         btnPlaySlow.setBounds(1100, 580, 240, 75); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
         btnPlaySlow.setVisible(false);
         btnPlaySlow.addActionListener(e -> {
@@ -103,7 +103,7 @@ public class MainPanel extends JPanel {
 
         labelRound = new JLabel();
         ImageIcon iconRound = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/round" + (currentRound + 1) + ".png")));
-        labelRound.setIcon(resizeImageIcon(iconRound, 240, 80));
+        labelRound.setIcon(UIUtils.resizeImageIcon(iconRound, 240, 80));
         labelRound.setBounds(575, 25, 240, 80); // x, y 위치와 너비, 높이 설정 (크기 조정된 값을 사용)
 
         // JTextArea 생성
@@ -155,7 +155,7 @@ public class MainPanel extends JPanel {
     public void setMain(String songName) {
         this.currentSongName = songName; // 멤버 변수에 노래 제목 저장
         ImageIcon iconMain = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Board/board_" + songName + ".png")));
-        labelBoard.setIcon(resizeImageIcon(iconMain, imageWidth, imageHeight));
+        labelBoard.setIcon(UIUtils.resizeImageIcon(iconMain, imageWidth, imageHeight));
     }
 
     private void updateFailPanel(boolean lastRound) {
@@ -216,25 +216,10 @@ public class MainPanel extends JPanel {
         // 새 이미지 파일 경로 생성
         String imagePath = "/Image/Board/sboard_" + songName + ".png";
         ImageIcon iconChangedBoard = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
-        labelBoard.setIcon(resizeImageIcon(iconChangedBoard, imageWidth, imageHeight));
+        labelBoard.setIcon(UIUtils.resizeImageIcon(iconChangedBoard, imageWidth, imageHeight));
     }
     public void updateRoundLabel() {
         ImageIcon iconRound = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/round" + (currentRound + 1) + ".png")));
-        labelRound.setIcon(resizeImageIcon(iconRound, 240, 80));
-    }
-    private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
-        Image newimg = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH); // 넘겨받은 width와 height를 사용하여 크기를 조정합니다.
-        icon = new ImageIcon(newimg); // 조정된 이미지로 ImageIcon을 다시 생성합니다.
-
-        button.setIcon(icon);
-        button.setBorderPainted(false); // 버튼 경계를 그리지 않음
-        button.setContentAreaFilled(false); // 내용 영역 배경을 그리지 않음
-        button.setFocusPainted(false); // 선택(포커스)됐을 때 경계를 그리지 않음
-        button.setOpaque(false); // 투명하게 설정
-    }
-    private ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
-        Image resizedImage = icon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-        return new ImageIcon(resizedImage);
+        labelRound.setIcon(UIUtils.resizeImageIcon(iconRound, 240, 80));
     }
 }

@@ -5,12 +5,10 @@ import java.util.Map;
 
 public class SongLibrary {
     private Map<String, String> songMap;
-
     public SongLibrary() {
         songMap = new HashMap<>();
         initializeSongs();
     }
-
     private void initializeSongs() {
         // 노래 정보 추가
         songMap.put("eta", "뉴진스이티에이");
