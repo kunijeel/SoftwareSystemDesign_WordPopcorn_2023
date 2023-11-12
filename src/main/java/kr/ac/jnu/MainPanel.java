@@ -16,7 +16,6 @@ public class MainPanel extends JPanel {
     private JButton btnPlaySong, btnSubmit, btnSaveLyrics, btnPlaySlow;
     private JTextArea answerTextArea;
     private boolean[] roundsPlayed = new boolean[3]; // 3라운드를 위한 재생 여부 배열
-    private boolean hintSlow, hintSpacing;
     private int currentRound = 0;
     private final int imageWidth = 1300;  // 기본 이미지 너비 설정
     private final int imageHeight = 500; // 기본 이미지 높이 설정
@@ -186,6 +185,16 @@ public class MainPanel extends JPanel {
             }
         }
         return true; // 모든 문자가 한글입니다.
+    }
+    // 가사의 특정 위치에 있는 글자 반환
+    public String getCharacterAt(int index) {
+        String currentLyrics = songLibrary.getLyricsByTitle(currentSongName); // 현재 라운드의 노래 가사 가져오기
+
+        if (currentLyrics != null && index >= 0 && index < currentLyrics.length()) {
+            return String.valueOf(currentLyrics.charAt(index));
+        } else {
+            return "잘못된 위치";
+        }
     }
     public void saveLyrics() {
         String lyrics = answerTextArea.getText(); // 텍스트 가져오기

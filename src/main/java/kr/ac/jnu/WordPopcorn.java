@@ -33,6 +33,7 @@ public class WordPopcorn extends JFrame {
         SuccessPanel successPanel = new SuccessPanel();
         FailPanel failPanel = new FailPanel();
         EditingPanel editingPanel = new EditingPanel();
+        SlowDownPanel slowDownPanel = new SlowDownPanel();
         cardPanel.add(initialPanel, "InitialPanel");
         cardPanel.add(songSelectPanel, "SongSelectPanel"); // cardPanel에 SongSelectPanel 추가
         cardPanel.add(songInfoPanel, "SongInfoPanel");
@@ -42,6 +43,7 @@ public class WordPopcorn extends JFrame {
         cardPanel.add(successPanel, "SuccessPanel");
         cardPanel.add(failPanel, "FailPanel");
         cardPanel.add(editingPanel, "EditingPanel");
+        cardPanel.add(slowDownPanel, "SlowDownPanel");
 
         // 레이어드 팬에 배경 패널과 카드 패널을 추가
         layeredPane.add(backgroundPanel, Integer.valueOf(1)); // 배경은 레이어 1에 추가
@@ -75,7 +77,7 @@ public class WordPopcorn extends JFrame {
             } catch (IOException | FontFormatException e) {
                 throw new RuntimeException(e);
             }
-            frame.cardLayout.show(frame.cardPanel, "InitialPanel"); // 프로그램 시작 시 InitialPanel 보이기
+            frame.cardLayout.show(frame.cardPanel, "SlowDownPanel"); // 프로그램 시작 시 InitialPanel 보이기
             frame.setVisible(true);
         });
     }
