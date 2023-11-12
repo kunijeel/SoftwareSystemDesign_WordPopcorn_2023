@@ -18,8 +18,17 @@ public class HintPanel extends JPanel {
         btnSpace.addActionListener(e -> {
             WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
             MainPanel mainPanel = (MainPanel) wordPopcorn.getCardPanel().getComponent(3); // MainPanel 인덱스에 맞게 조정
-            mainPanel.updateBoardImage(wordPopcorn.getCurrentSongName()); // board 이미지 업데이트
-            wordPopcorn.showCard("MainPanel"); // MainPanel로 돌아가기
+
+            // EditingPanel 표시
+            wordPopcorn.showCard("EditingPanel");
+
+            // 4초 후 MainPanel로 전환하는 타이머 설정 및 시작
+            Timer timer = new Timer(4000, event -> {
+                mainPanel.updateBoardImage(wordPopcorn.getCurrentSongName()); // board 이미지 업데이트
+                wordPopcorn.showCard("MainPanel"); // MainPanel로 전환
+            });
+            timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정
+            timer.start(); // 타이머 시작
         });
 
         btnChar = new JButton();

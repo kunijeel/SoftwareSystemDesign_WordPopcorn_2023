@@ -32,6 +32,7 @@ public class WordPopcorn extends JFrame {
         GradingPanel gradingPanel = new GradingPanel();
         SuccessPanel successPanel = new SuccessPanel();
         FailPanel failPanel = new FailPanel();
+        EditingPanel editingPanel = new EditingPanel();
         cardPanel.add(initialPanel, "InitialPanel");
         cardPanel.add(songSelectPanel, "SongSelectPanel"); // cardPanel에 SongSelectPanel 추가
         cardPanel.add(songInfoPanel, "SongInfoPanel");
@@ -40,6 +41,7 @@ public class WordPopcorn extends JFrame {
         cardPanel.add(gradingPanel, "GradingPanel");
         cardPanel.add(successPanel, "SuccessPanel");
         cardPanel.add(failPanel, "FailPanel");
+        cardPanel.add(editingPanel, "EditingPanel");
 
         // 레이어드 팬에 배경 패널과 카드 패널을 추가
         layeredPane.add(backgroundPanel, Integer.valueOf(1)); // 배경은 레이어 1에 추가
