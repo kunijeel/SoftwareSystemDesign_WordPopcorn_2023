@@ -52,20 +52,25 @@ public class MainPanel extends JPanel {
                         Timer timer = new Timer(4000, event -> {
                             if (checkAnswer()) {
                                 ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("SuccessPanel");
+                                savedLyrics = "";
+                                currentRound = 0;
                             } else {
                                 // 오답 처리
                                 boolean isLastRound = currentRound == roundsPlayed.length - 1;
                                 updateFailPanel(isLastRound);
                                 ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("FailPanel");
+                                savedLyrics = "";
                                 if (!isLastRound) {
                                     currentRound++;
+                                } else {
+                                    currentRound = 0;
                                 }
                             }
                         });
                         timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정합니다.
                         timer.start(); // 타이머 시작
                     } else {
-                        JOptionPane.showMessageDialog(this, "글자 수는 맞게 입력하셔야죠!", "경고", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "답안과 정답의 글자 수가 서로 맞지 않거나, 답안이 저장되지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     // 해당 라운드의 노래를 아직 듣지 않았으므로 메시지를 표시합니다.
@@ -178,6 +183,14 @@ public class MainPanel extends JPanel {
             answerTextArea.setText(""); // 입력 필드 초기화
             JOptionPane.showMessageDialog(this, "가사가 저장되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+
+    // board 이미지 변경 메서드
+    public void updateBoardImage(String songName) {
+        // 새 이미지 파일 경로 생성
+        String imagePath = "/Image/Board/sboard_" + songName + ".png";
+        ImageIcon iconChangedBoard = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
+        labelBoard.setIcon(resizeImageIcon(iconChangedBoard, imageWidth, imageHeight));
     }
     private void setButtonGraphics(JButton button, String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));

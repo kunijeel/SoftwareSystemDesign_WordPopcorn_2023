@@ -12,17 +12,23 @@ public class HintPanel extends JPanel {
         setLayout(null);
         setOpaque(false); // InitialPanel을 투명하게 설정
 
-        btnSlow = new JButton();
-        setButtonGraphics(btnSlow, "/Image/Button/slow.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정
-        btnSlow.setBounds(180, 50, hintBtnWidth, hintBtnHeight); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
-
         btnSpace = new JButton();
         setButtonGraphics(btnSpace, "/Image/Button/space.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정
-        btnSpace.setBounds(710, 50, hintBtnWidth, hintBtnHeight); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
+        btnSpace.setBounds(180, 50, hintBtnWidth, hintBtnHeight); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
+        btnSpace.addActionListener(e -> {
+            WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
+            MainPanel mainPanel = (MainPanel) wordPopcorn.getCardPanel().getComponent(3); // MainPanel 인덱스에 맞게 조정
+            mainPanel.updateBoardImage(wordPopcorn.getCurrentSongName()); // board 이미지 업데이트
+            wordPopcorn.showCard("MainPanel"); // MainPanel로 돌아가기
+        });
 
         btnChar = new JButton();
         setButtonGraphics(btnChar, "/Image/Button/char.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정
-        btnChar.setBounds(180, 410, hintBtnWidth, hintBtnHeight); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
+        btnChar.setBounds(710, 50, hintBtnWidth, hintBtnHeight); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
+
+        btnSlow = new JButton();
+        setButtonGraphics(btnSlow, "/Image/Button/slow.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정
+        btnSlow.setBounds(180, 410, hintBtnWidth, hintBtnHeight); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
 
         btnIncorrect = new JButton();
         setButtonGraphics(btnIncorrect, "/Image/Button/incorrect.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정
