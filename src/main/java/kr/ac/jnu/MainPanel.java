@@ -160,7 +160,7 @@ public class MainPanel extends JPanel {
 
     private void updateFailPanel(boolean lastRound) {
         WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
-        FailPanel failPanel = ((FailPanel) wordPopcorn.getCardPanel().getComponent(7));
+        FailPanel failPanel = ((FailPanel) wordPopcorn.getCardPanel().getComponent(6));
         failPanel.updateForRoundStatus(!lastRound); // 마지막 라운드가 아니면 true, 마지막 라운드면 false
     }
 

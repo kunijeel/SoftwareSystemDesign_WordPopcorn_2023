@@ -9,6 +9,10 @@ public class WordPopcorn extends JFrame {
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel cardPanel; // 이제 cardPanel을 클래스의 필드로 선언하였습니다.
 
+    private MessagePanel slowDownPanel;
+    private MessagePanel gradingPanel;
+    private MessagePanel editingPanel;
+
     public WordPopcorn() throws IOException, FontFormatException {
         // 레이어드 팬 생성
         JLayeredPane layeredPane = new JLayeredPane();
@@ -29,21 +33,22 @@ public class WordPopcorn extends JFrame {
         SongInfoPanel songInfoPanel = new SongInfoPanel();
         MainPanel mainPanel = new MainPanel();
         HintPanel hintPanel = new HintPanel();
-        GradingPanel gradingPanel = new GradingPanel();
         SuccessPanel successPanel = new SuccessPanel();
         FailPanel failPanel = new FailPanel();
-        EditingPanel editingPanel = new EditingPanel();
-        SlowDownPanel slowDownPanel = new SlowDownPanel();
+        slowDownPanel = new MessagePanel("/Image/Sign/slowdown.png", 1180, 500, 110, 140);
+        gradingPanel = new MessagePanel("/Image/Sign/grading.png", 900, 300, 290, 240);
+        editingPanel = new MessagePanel("/Image/Sign/editing.png", 1000, 500, 200, 140);
+
         cardPanel.add(initialPanel, "InitialPanel");
         cardPanel.add(songSelectPanel, "SongSelectPanel"); // cardPanel에 SongSelectPanel 추가
         cardPanel.add(songInfoPanel, "SongInfoPanel");
         cardPanel.add(mainPanel, "MainPanel");
         cardPanel.add(hintPanel, "HintPanel");
-        cardPanel.add(gradingPanel, "GradingPanel");
         cardPanel.add(successPanel, "SuccessPanel");
         cardPanel.add(failPanel, "FailPanel");
-        cardPanel.add(editingPanel, "EditingPanel");
         cardPanel.add(slowDownPanel, "SlowDownPanel");
+        cardPanel.add(gradingPanel, "GradingPanel");
+        cardPanel.add(editingPanel, "EditingPanel");
 
         // 레이어드 팬에 배경 패널과 카드 패널을 추가
         layeredPane.add(backgroundPanel, Integer.valueOf(1)); // 배경은 레이어 1에 추가
@@ -77,7 +82,7 @@ public class WordPopcorn extends JFrame {
             } catch (IOException | FontFormatException e) {
                 throw new RuntimeException(e);
             }
-            frame.cardLayout.show(frame.cardPanel, "SlowDownPanel"); // 프로그램 시작 시 InitialPanel 보이기
+            frame.cardLayout.show(frame.cardPanel, "InitialPanel"); // 프로그램 시작 시 InitialPanel 보이기
             frame.setVisible(true);
         });
     }
