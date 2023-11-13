@@ -117,4 +117,12 @@ public class HintPanel extends JPanel {
         add(btnSlow);
         add(btnIncorrect);
     }
+
+    public void resetPanel() {
+        // 모든 버튼을 보이게 설정
+        btnSpace.setVisible(true);
+        btnChar.setVisible(true);
+        btnSlow.setVisible(true);
+        btnIncorrect.setVisible(true);
+    }
 }

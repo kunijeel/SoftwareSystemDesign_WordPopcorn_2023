@@ -14,6 +14,14 @@ public class FailPanel extends JPanel {
         btnBack.setBounds(990, 655, 330, 90);
         btnBack.addActionListener(e -> {
             WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
+
+            HintPanel hintPanel = (HintPanel) wordPopcorn.getCardPanel().getComponent(4);
+            MainPanel mainPanel = (MainPanel) wordPopcorn.getCardPanel().getComponent(3);
+
+            hintPanel.resetPanel();
+            mainPanel.resetPanel();
+            mainPanel.updateRoundLabel();
+
             wordPopcorn.showCard("InitialPanel"); // InitialPanel로 이동
         });
 

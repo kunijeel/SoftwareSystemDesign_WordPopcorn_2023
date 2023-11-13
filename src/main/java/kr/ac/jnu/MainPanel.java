@@ -273,4 +273,24 @@ public class MainPanel extends JPanel {
         ImageIcon iconRound = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/round" + (currentRound + 1) + ".png")));
         labelRound.setIcon(UIUtils.resizeImageIcon(iconRound, 240, 80));
     }
+
+    public void resetPanel() {
+        // 저장된 가사 초기화
+        savedLyrics = "";
+
+        // 현재 노래 이름 초기화
+        currentSongName = "";
+
+        // 답변 텍스트 영역 초기화
+        if (answerTextArea != null) {
+            answerTextArea.setText("");
+        }
+
+        // 현재 라운드 번호 초기화
+        currentRound = 0;
+
+        for (int i = 0; i < roundsPlayed.length; i++) {
+            roundsPlayed[i] = false;
+        }
+    }
 }
