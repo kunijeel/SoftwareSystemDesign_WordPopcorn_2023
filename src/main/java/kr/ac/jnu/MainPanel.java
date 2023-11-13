@@ -31,9 +31,19 @@ public class MainPanel extends JPanel {
         btnPlaySong.setBounds(1100, 580, 240, 70); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
         btnPlaySong.addActionListener(e -> {
             if (player.isPlaying()) {
-                JOptionPane.showMessageDialog(this, "노래가 재생중입니다!");
+                try {
+                    // CustomInfoDialog를 사용하여 메시지를 표시합니다.
+                    CustomInfoDialog.showInfoDialog((JFrame) SwingUtilities.getWindowAncestor(this), "알림", "노래가 재생 중입니다!", 17f, 600, 200);
+                } catch (IOException | FontFormatException ex) {
+                    ex.printStackTrace();
+                    // 필요한 경우 오류 처리를 추가할 수 있습니다.
+                }
             } else {
-                playRoundSong();
+                try {
+                    playRoundSong();
+                } catch (IOException | FontFormatException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -42,6 +52,7 @@ public class MainPanel extends JPanel {
         UIUtils.setButtonGraphics(btnSubmit, "/Image/Button/submit.png", 240, 70);
         btnSubmit.setBounds(1100, 670, 240, 70);
         btnSubmit.addActionListener(e -> {
+            JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this); // JFrame 객체를 가져옵니다.
             // 먼저, 노래가 재생 중인지 확인합니다.
             if (!player.isPlaying()) {
                 if (roundsPlayed[currentRound]) { // 해당 라운드의 노래를 이미 들었는지 확인합니다.
@@ -69,15 +80,27 @@ public class MainPanel extends JPanel {
                         timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정합니다.
                         timer.start(); // 타이머 시작
                     } else {
-                        JOptionPane.showMessageDialog(this, "답안과 정답의 글자 수가 서로 맞지 않거나, 답안이 저장되지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+                        try {
+                            CustomInfoDialog.showInfoDialog(owner, "알림", "답안과 정답의 글자 수가 서로 맞지 않거나, 답안이 저장되지 않았습니다.", 17f, 600, 200);
+                        } catch (IOException | FontFormatException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 } else {
                     // 해당 라운드의 노래를 아직 듣지 않았으므로 메시지를 표시합니다.
-                    JOptionPane.showMessageDialog(MainPanel.this, "이 라운드의 노래를 먼저 들어야 합니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+                    try {
+                        CustomInfoDialog.showInfoDialog(owner, "알림", "이 라운드의 노래를 먼저 들어야 합니다.", 17f, 600, 200);
+                    } catch (IOException | FontFormatException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             } else {
                 // 노래가 재생 중일 경우, 경고 메시지를 표시합니다.
-                JOptionPane.showMessageDialog(MainPanel.this, "노래가 아직 재생 중입니다! 재생이 끝난 후 시도해주세요.", "경고", JOptionPane.WARNING_MESSAGE);
+                try {
+                    CustomInfoDialog.showInfoDialog(owner, "알림", "노래가 아직 재생 중입니다! 재생이 끝난 후 시도해 주세요.", 17f, 600, 200);
+                } catch (IOException | FontFormatException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -86,7 +109,11 @@ public class MainPanel extends JPanel {
         UIUtils.setButtonGraphics(btnSaveLyrics, "/Image/Button/save.png",130, 170);
         btnSaveLyrics.setBounds(965, 580, 130, 170); // 적절한 위치와 크기 설정
         btnSaveLyrics.addActionListener(e -> {
-            saveLyrics(); // saveLyrics 함수 호출
+            try {
+                saveLyrics(); // saveLyrics 함수 호출
+            } catch (IOException | FontFormatException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         btnPlaySlow = new JButton();
@@ -94,7 +121,33 @@ public class MainPanel extends JPanel {
         btnPlaySlow.setBounds(1100, 580, 240, 75); // 이제 아이콘이 설정된 후에 버튼의 위치와 크기를 지정
         btnPlaySlow.setVisible(false);
         btnPlaySlow.addActionListener(e -> {
-            btnPlaySlow.setVisible(false);
+            JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this); // JFrame 객체를 가져옵니다.
+            if (player.isPlaying()) {
+                try {
+                    CustomInfoDialog.showInfoDialog(owner, "알림", "노래가 이미 재생 중입니다!", 17f, 600, 200);
+                } catch (IOException | FontFormatException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                try {
+                    String slowSongFilePath = "/Sound/smusic_" + currentSongName + ".wav";
+                    player.load(slowSongFilePath);
+                    player.play();
+                    new Timer(100, e1 -> {
+                        if (!player.isPlaying()) {
+                            btnPlaySlow.setVisible(false);
+                            ((Timer) e1.getSource()).stop(); // 타이머 정지
+                        }
+                    }).start();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    try {
+                        CustomInfoDialog.showInfoDialog((JFrame) SwingUtilities.getWindowAncestor(this), "오류", "노래를 재생할 수 없습니다.", 17f, 600, 200);
+                    } catch (IOException | FontFormatException exc) {
+                        throw new RuntimeException(exc);
+                    }
+                }
+            }
         });
 
 
@@ -132,7 +185,7 @@ public class MainPanel extends JPanel {
         add(scrollPane);
     }
 
-    private void playRoundSong() {
+    private void playRoundSong() throws IOException, FontFormatException {
         if (currentRound < roundsPlayed.length && !roundsPlayed[currentRound]) {
             try {
                 player.load("/Sound/music_" + currentSongName + ".wav"); // 라운드에 맞는 노래 로드
@@ -142,10 +195,9 @@ public class MainPanel extends JPanel {
                 ex.printStackTrace(); // 오류 출력
             }
         } else {
-            JOptionPane.showMessageDialog(this, "이 라운드에서는 노래를 이미 들었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+            CustomInfoDialog.showInfoDialog((JFrame) SwingUtilities.getWindowAncestor(this), "알림", "이 라운드에서는 노래를 이미 들었습니다.", 17f, 600, 200);
         }
     }
-
     public JButton getBtnPlaySlow() {
         return btnPlaySlow;
     }
@@ -157,13 +209,11 @@ public class MainPanel extends JPanel {
         ImageIcon iconMain = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Board/board_" + songName + ".png")));
         labelBoard.setIcon(UIUtils.resizeImageIcon(iconMain, imageWidth, imageHeight));
     }
-
     private void updateFailPanel(boolean lastRound) {
         WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
         FailPanel failPanel = ((FailPanel) wordPopcorn.getCardPanel().getComponent(6));
         failPanel.updateForRoundStatus(!lastRound); // 마지막 라운드가 아니면 true, 마지막 라운드면 false
     }
-
     private boolean checkAnswer() {
         int counter = 0; // 틀린 문자 수 초기화
         String correctAnswer = songLibrary.getLyricsByTitle(currentSongName); // 현재 노래의 정답 가사 가져오기
@@ -196,18 +246,19 @@ public class MainPanel extends JPanel {
             return "잘못된 위치";
         }
     }
-    public void saveLyrics() {
+    public void saveLyrics() throws IOException, FontFormatException {
         String lyrics = answerTextArea.getText(); // 텍스트 가져오기
         lyrics = lyrics.replaceAll("\\s+", ""); // 모든 공백 제거
+        JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this); // JFrame 객체를 가져옵니다.
 
         if (lyrics.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "가사를 입력해주세요.", "경고", JOptionPane.WARNING_MESSAGE);
+            CustomInfoDialog.showInfoDialog(owner, "알림", "가사를 입력해주세요.", 17f, 600, 200);
         } else if (!isOnlyKorean(lyrics)) {
-            JOptionPane.showMessageDialog(this, "가사는 한글로만 구성되어야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+            CustomInfoDialog.showInfoDialog(owner, "알림", "가사는 한글로만 구성되어야 합니다.", 17f, 600, 200);
         } else {
             this.savedLyrics = lyrics;
             answerTextArea.setText(""); // 입력 필드 초기화
-            JOptionPane.showMessageDialog(this, "가사가 저장되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+            CustomInfoDialog.showInfoDialog(owner, "알림", "가사가 저장되었습니다.", 17f, 600, 200);
         }
     }
 

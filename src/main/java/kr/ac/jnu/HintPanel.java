@@ -2,9 +2,7 @@ package kr.ac.jnu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Objects;
+import java.io.IOException;
 
 public class HintPanel extends JPanel {
     private JButton btnSlow, btnSpace, btnIncorrect, btnChar;
@@ -42,10 +40,13 @@ public class HintPanel extends JPanel {
             WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
             MainPanel mainPanel = (MainPanel) wordPopcorn.getCardPanel().getComponent(3); // MainPanel 인덱스에 맞게 조정
 
+            wordPopcorn.showCard("MainPanel"); // MainPanel로 전환
+
             while (true) {
-                String positionStr = JOptionPane.showInputDialog(this, "알고 싶은 글자의 위치를 입력하세요 (첫 글자는 1번):");
+                String positionStr = JOptionPane.showInputDialog(this, "원하는 한 글자의 위치에 해당하는 번호를 입력해 주세요 (첫 글자는 1번). 취소하시면 다시 힌트판으로 돌아갑니다.");
                 if (positionStr == null || positionStr.isEmpty()) {
                     // 사용자가 취소하거나 빈 문자열을 입력한 경우 루프 종료
+                    wordPopcorn.showCard("HintPanel"); // MainPanel로 전환
                     break;
                 }
 
@@ -54,20 +55,24 @@ public class HintPanel extends JPanel {
                     String character = mainPanel.getCharacterAt(position);
 
                     if (!character.equals("잘못된 위치")) {
-                        JOptionPane.showMessageDialog(this, "선택한 위치의 글자: " + character, "글자 정보", JOptionPane.INFORMATION_MESSAGE);
+                        CustomInfoDialog.showInfoDialog((JFrame) SwingUtilities.getWindowAncestor(this), "알림", "선택한 위치의 글자 : " + character, 20f, 600, 200);
                         mainPanel.updateRoundLabel();
-                        wordPopcorn.showCard("MainPanel"); // MainPanel로 전환
                         btnChar.setVisible(false);
-                        break; // 올바른 위치가 입력되면 루프 종료
+                        break;
                     } else {
-                        JOptionPane.showMessageDialog(this, "잘못된 위치입니다. 다시 입력해주세요.", "오류", JOptionPane.ERROR_MESSAGE);
+                        CustomInfoDialog.showInfoDialog((JFrame) SwingUtilities.getWindowAncestor(this), "알림", "잘못된 위치입니다. 다시 입력해 주세요.", 20f, 600, 200);
                     }
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "유효한 숫자를 입력해주세요.", "오류", JOptionPane.ERROR_MESSAGE);
+                    try {
+                        CustomInfoDialog.showInfoDialog((JFrame) SwingUtilities.getWindowAncestor(this), "알림", "유효한 숫자를 입력해 주세요.", 20f, 600, 200);
+                    } catch (IOException | FontFormatException exc) {
+                        throw new RuntimeException(exc);
+                    }
+                } catch (IOException | FontFormatException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
-
 
         btnSlow = new JButton();
         UIUtils.setButtonGraphics(btnSlow, "/Image/Button/slow.png", hintBtnWidth, hintBtnHeight); // 먼저 아이콘을 설정
@@ -98,7 +103,11 @@ public class HintPanel extends JPanel {
 
             int incorrectCount = mainPanel.getIncorrectAnswersCount();
             mainPanel.updateRoundLabel();
-            JOptionPane.showMessageDialog(this, "오답의 개수: " + incorrectCount, "오답 정보", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                CustomInfoDialog.showInfoDialog(wordPopcorn, "오답 수 확인", "오답의 개수 : " + incorrectCount, 50f, 600, 300);
+            } catch (IOException | FontFormatException ex) {
+                throw new RuntimeException(ex);
+            }
             wordPopcorn.showCard("MainPanel"); // MainPanel로 전환
             btnIncorrect.setVisible(false);
         });

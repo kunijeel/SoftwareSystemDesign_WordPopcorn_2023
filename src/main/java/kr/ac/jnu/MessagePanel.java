@@ -1,7 +1,6 @@
 package kr.ac.jnu;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Objects;
 
 public class MessagePanel extends JPanel {
