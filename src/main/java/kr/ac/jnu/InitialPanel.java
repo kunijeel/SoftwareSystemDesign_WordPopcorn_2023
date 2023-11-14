@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.Objects;
 
 public class InitialPanel extends JPanel {
-    private JButton btnAccess, btnExit;
+    private JButton btnAccess, btnExit, btnPlayGuide;
     private JLabel labelTitle;
 
     public InitialPanel() {
@@ -25,6 +25,11 @@ public class InitialPanel extends JPanel {
             System.exit(0);
         });
 
+        btnPlayGuide = new JButton();
+        UIUtils.setButtonGraphics(btnPlayGuide, "/Image/Button/guide.png", 50, 50); // 먼저 아이콘을 설정
+        btnPlayGuide.setBounds(1260, 60, 50, 50); // 버튼 위치 및 크기 설정
+        btnPlayGuide.addActionListener(e -> showGamePlayInfo());
+
         labelTitle = new JLabel();
         ImageIcon iconTitle = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/title.png"))); // 기존의 타이틀 이미지 경로
         labelTitle.setIcon(UIUtils.resizeImageIcon(iconTitle, 1200, 400));
@@ -34,6 +39,15 @@ public class InitialPanel extends JPanel {
         add(labelTitle);
         add(btnAccess);
         add(btnExit);
+        add(btnPlayGuide);
+    }
 
+    private void showGamePlayInfo() {
+        JFrame infoFrame = new JFrame("게임 플레이 방법");
+        PlayGuidePanel infoPanel = new PlayGuidePanel("/Image/guideimg.png");
+        infoFrame.add(infoPanel);
+        infoFrame.pack();
+        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setVisible(true);
     }
 }

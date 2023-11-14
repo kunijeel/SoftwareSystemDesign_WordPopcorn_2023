@@ -6,20 +6,25 @@ import java.io.IOException;
 
 public class WordPopcorn extends JFrame {
     private String currentSongName; // 현재 노래 제목을 저장하는 변수
+    private JLayeredPane layeredPane;
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel cardPanel; // 이제 cardPanel을 클래스의 필드로 선언하였습니다.
-
-    private MessagePanel slowDownPanel;
-    private MessagePanel gradingPanel;
-    private MessagePanel editingPanel;
-
+    private BackgroundPanel backgroundPanel;
+    private MessagePanel slowDownPanel, gradingPanel, editingPanel;
+    private InitialPanel initialPanel;
+    private SongSelectPanel songSelectPanel;
+    private SongInfoPanel songInfoPanel;
+    private MainPanel mainPanel;
+    private HintPanel hintPanel;
+    private SuccessPanel successPanel;
+    private FailPanel failPanel;
     public WordPopcorn() throws IOException, FontFormatException {
         // 레이어드 팬 생성
-        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(1400, 775)); // 레이어드 팬의 선호 사이즈 설정
 
         // 배경 패널 설정
-        BackgroundPanel backgroundPanel = new BackgroundPanel();
+        backgroundPanel = new BackgroundPanel();
         backgroundPanel.setBounds(0, 0, 1400, 775); // 배경 패널의 크기와 위치 설정
 
         // 카드 패널 설정
@@ -28,13 +33,13 @@ public class WordPopcorn extends JFrame {
         cardPanel.setBounds(0, 0, 1400, 775); // 카드 패널의 크기와 위치 설정
 
         // 패널 추가
-        InitialPanel initialPanel = new InitialPanel(); // 초기 패널 인스턴스 생성
-        SongSelectPanel songSelectPanel = new SongSelectPanel(); // SongSelectPanel 인스턴스 생성
-        SongInfoPanel songInfoPanel = new SongInfoPanel();
-        MainPanel mainPanel = new MainPanel();
-        HintPanel hintPanel = new HintPanel();
-        SuccessPanel successPanel = new SuccessPanel();
-        FailPanel failPanel = new FailPanel();
+        initialPanel = new InitialPanel(); // 초기 패널 인스턴스 생성
+        songSelectPanel = new SongSelectPanel(); // SongSelectPanel 인스턴스 생성
+        songInfoPanel = new SongInfoPanel();
+        mainPanel = new MainPanel();
+        hintPanel = new HintPanel();
+        successPanel = new SuccessPanel();
+        failPanel = new FailPanel();
         editingPanel = new MessagePanel("/Image/Sign/editing.png", 1000, 500, 200, 140);
         slowDownPanel = new MessagePanel("/Image/Sign/slowdown.png", 1180, 500, 110, 140);
         gradingPanel = new MessagePanel("/Image/Sign/grading.png", 900, 300, 290, 240);

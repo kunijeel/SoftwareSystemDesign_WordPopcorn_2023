@@ -15,6 +15,7 @@ public class MainPanel extends JPanel {
     private JLabel labelBoard, labelRound;
     private JButton btnPlaySong, btnSubmit, btnSaveLyrics, btnPlaySlow;
     private JTextArea answerTextArea;
+    private JScrollPane scrollPane;
     private boolean[] roundsPlayed = new boolean[3]; // 3라운드를 위한 재생 여부 배열
     private int currentRound = 0;
     private final int imageWidth = 1300;  // 기본 이미지 너비 설정
@@ -165,7 +166,7 @@ public class MainPanel extends JPanel {
         answerTextArea.setWrapStyleWord(true); // 단어 단위로 줄바꿈
 
         // JScrollPane에 JTextArea 추가
-        JScrollPane scrollPane = new JScrollPane(answerTextArea);
+        scrollPane = new JScrollPane(answerTextArea);
         scrollPane.setBounds(140, 585, 800, 150); // JTextArea가 있던 위치와 크기로 설정
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

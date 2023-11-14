@@ -6,15 +6,13 @@ import java.util.Objects;
 public class MessagePanel extends JPanel {
     private Timer blinkTimer;
     private JLabel labelMessage;
-    private ImageIcon iconMessage;
 
     public MessagePanel(String imagePath, int width, int height, int x, int y) {
         setLayout(null);
         setOpaque(false);
 
         labelMessage = new JLabel();
-        iconMessage = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
-        labelMessage.setIcon(UIUtils.resizeImageIcon(iconMessage, width, height));
+        labelMessage.setIcon(UIUtils.resizeImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath))), width, height));
         labelMessage.setBounds(x, y, width, height); // 위치 설정
         add(labelMessage);
 

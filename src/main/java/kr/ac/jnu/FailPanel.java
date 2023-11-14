@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class FailPanel extends JPanel {
     private JButton btnSelectHint, btnBack;
+    private JLabel labelFail;
     public FailPanel() {
         setLayout(null);
         setOpaque(false);
@@ -33,7 +34,7 @@ public class FailPanel extends JPanel {
             wordPopcorn.showCard("HintPanel"); // InitialPanel로 이동
         });
 
-        JLabel labelFail = new JLabel();
+        labelFail = new JLabel();
         ImageIcon iconFail = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/fail.png")));
         labelFail.setIcon(UIUtils.resizeImageIcon(iconFail, 1050, 700));
         labelFail.setBounds(175, 80, 1050, 700); // x, y 위치와 너비, 높이 설정 (크기 조정된 값을 사용)
