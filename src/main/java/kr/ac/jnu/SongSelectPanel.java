@@ -3,17 +3,101 @@ package kr.ac.jnu;
 import javax.swing.*;
 import java.util.Objects;
 
+/**
+ * SongSelectPanel 클래스는 사용자가 노래를 선택할 수 있는 패널을 구현합니다.
+ * 이 패널은 앨범 커버 이미지와 노래에 대한 간략한 정보를 제공하여 사용자가 노래를 선택하고 정보를 볼 수 있도록 합니다.
+ *
+ * @author Tam Oh
+ */
 public class SongSelectPanel extends JPanel {
-    private JLabel labelLeft, labelCenter, labelRight, labelPreview; // 세 개의 레이블
-    private JButton btnLeft, btnRight, btnShowSongInfo;
-    private final ImageIcon[] albumImages; // 앨범 이미지 배열
-    private final String[] albumPreviewPaths; // 앨범 미리보기 이미지 경로 배열
-    private int currentIndex = 0; // 현재 중앙에 위치한 이미지의 인덱스
-    private final int largeWidth = 600; // 큰 이미지의 너비
-    private final int largeHeight = 600; // 큰 이미지의 높이
-    private final int smallWidth = 400; // 작은 이미지의 너비
-    private final int smallHeight = 400; // 작은 이미지의 높이
+    /**
+     * 왼쪽에 위치한 앨범 커버 레이블.
+     * 이 레이블은 사용자가 앨범을 선택할 때 이전 앨범을 표시합니다.
+     */
+    private JLabel labelLeft;
 
+    /**
+     * 중앙에 위치한 큰 앨범 커버 레이블.
+     * 이 레이블은 앨범의 커버를 크게 표시합니다.
+     */
+    private JLabel labelCenter;
+
+    /**
+     * 오른쪽에 위치한 앨범 커버 레이블.
+     * 이 레이블은 사용자가 앨범을 선택할 때 다음 앨범을 표시합니다.
+     */
+    private JLabel labelRight;
+
+    /**
+     * 노래의 제목, 가수, 레벨을 표시하는 레이블.
+     */
+    private JLabel labelPreview;
+
+    /**
+     * 왼쪽으로 이동하는 버튼.
+     * 이 버튼은 사용자가 이전 앨범을 볼 수 있도록 합니다.
+     */
+    private JButton btnLeft;
+
+    /**
+     * 오른쪽으로 이동하는 버튼.
+     * 이 버튼은 사용자가 다음 앨범을 볼 수 있도록 합니다.
+     */
+    private JButton btnRight;
+
+    /**
+     * 노래 정보를 보여주는 버튼.
+     * 이 버튼을 클릭하면 현재 선택된 노래의 상세 정보를 표시합니다.
+     */
+    private JButton btnShowSongInfo;
+
+    /**
+     * 앨범 이미지를 저장하는 배열.
+     * 이 배열은 각 앨범 커버 이미지를 ImageIcon 객체로 저장합니다.
+     */
+    private final ImageIcon[] albumImages;
+
+    /**
+     * 앨범 요약 이미지의 경로를 저장하는 배열.
+     * 각 앨범에 대한 요약 이미지의 경로가 저장됩니다.
+     */
+    private final String[] albumPreviewPaths;
+
+    /**
+     * 현재 중앙에 위치한 앨범 이미지의 인덱스.
+     * 이 인덱스는 사용자가 앨범을 넘길 때마다 업데이트됩니다.
+     */
+    private int currentIndex = 0;
+
+    /**
+     * 큰 이미지의 너비를 정의하는 상수.
+     * 중앙에 위치한 앨범 이미지의 너비에 사용됩니다.
+     */
+    private final int largeWidth = 600;
+
+    /**
+     * 큰 이미지의 높이를 정의하는 상수.
+     * 중앙에 위치한 앨범 이미지의 높이에 사용됩니다.
+     */
+    private final int largeHeight = 600;
+
+    /**
+     * 작은 이미지의 너비를 정의하는 상수.
+     * 좌우에 위치한 앨범 이미지의 너비에 사용됩니다.
+     */
+    private final int smallWidth = 400;
+
+    /**
+     * 작은 이미지의 높이를 정의하는 상수.
+     * 좌우에 위치한 앨범 이미지의 높이에 사용됩니다.
+     */
+    private final int smallHeight = 400;
+
+    /**
+     * SongSelectPanel의 생성자.
+     * 패널의 레이아웃, 앨범 이미지, 요약 이미지 경로를 초기화하고, 레이블과 버튼을 설정합니다.
+     * 또한 버튼의 이벤트 리스너를 추가하여 사용자가 앨범을 선택하고, 노래 정보를 볼 수 있도록 합니다.
+     */
     public SongSelectPanel() {
         setOpaque(false);
         setLayout(null); // 레이아웃 매니저를 null로 설정
@@ -36,13 +120,13 @@ public class SongSelectPanel extends JPanel {
 
         // 레이블 초기화 및 위치, 크기 설정
         labelLeft = new JLabel();
-        labelLeft.setBounds(50, 65, smallWidth, smallHeight); // x, y, width, height
+        labelLeft.setBounds(50, 65, smallWidth, smallHeight);
 
         labelRight = new JLabel();
-        labelRight.setBounds(950, 65, smallWidth, smallHeight); // x, y, width, height
+        labelRight.setBounds(950, 65, smallWidth, smallHeight);
 
         labelCenter = new JLabel();
-        labelCenter.setBounds(400, 55, largeWidth, largeHeight); // x, y, width, height
+        labelCenter.setBounds(400, 55, largeWidth, largeHeight);
 
         // 레이블 설정
         labelPreview = new JLabel();
@@ -88,17 +172,32 @@ public class SongSelectPanel extends JPanel {
         // 초기 이미지 아이콘을 업데이트
         updateLabelImages();
     }
-    // 왼쪽으로 이동
+
+    /**
+     * 사용자가 왼쪽 버튼을 클릭했을 때 호출되는 메소드.
+     * 현재 선택된 앨범 인덱스를 감소시켜 이전 앨범을 중앙에 표시합니다.
+     * 이와 함께 좌우의 앨범 이미지도 갱신합니다.
+     */
     private void moveLeft() {
         currentIndex = (currentIndex + albumImages.length - 1) % albumImages.length;
         updateLabelImages();
     }
-    // 오른쪽으로 이동
+
+    /**
+     * 사용자가 오른쪽 버튼을 클릭했을 때 호출되는 메소드.
+     * 현재 선택된 앨범 인덱스를 증가시켜 다음 앨범을 중앙에 표시합니다.
+     * 이와 함께 좌우의 앨범 이미지도 갱신합니다.
+     */
     private void moveRight() {
         currentIndex = (currentIndex + 1) % albumImages.length;
         updateLabelImages();
     }
-    // 레이블에 이미지 업데이트
+
+    /**
+     * 현재 선택된 앨범 인덱스에 따라 레이블에 앨범 이미지를 업데이트하는 메소드.
+     * 중앙 레이블에는 큰 이미지를, 좌우 레이블에는 작은 이미지를 표시합니다.
+     * 또한, 요약 이미지도 갱신합니다.
+     */
     private void updateLabelImages() {
         labelLeft.setIcon(UIUtils.resizeImageIcon(albumImages[(currentIndex + albumImages.length - 1) % albumImages.length], smallWidth, smallHeight));
         labelCenter.setIcon(UIUtils.resizeImageIcon(albumImages[currentIndex], largeWidth, largeHeight)); // 중앙 이미지만 크게

@@ -4,10 +4,47 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * 게임에서 사용되는 다양한 힌트 기능을 제공하는 패널을 구현하는 클래스입니다.
+ * 이 패널에는 각기 다른 기능을 수행하는 여러 버튼이 포함되어 있습니다.
+ *
+ * @author Tam Oh
+ */
 public class HintPanel extends JPanel {
-    private JButton btnSlow, btnSpace, btnIncorrect, btnChar;
+    /**
+     * '느리게 재생' 힌트를 선택하기 위한 버튼입니다.
+     */
+    private JButton btnSlow;
+
+    /**
+     * '전체 띄어쓰기' 힌트를 선택하기 위한 버튼입니다.
+     */
+    private JButton btnSpace;
+
+    /**
+     * '오답 수 확인' 힌트를 선택하기 위한 버튼입니다.
+     */
+    private JButton btnIncorrect;
+
+    /**
+     * '한 글자 확인' 힌트를 선택하기 위한 버튼입니다.
+     */
+    private JButton btnChar;
+
+    /**
+     * 힌트 버튼의 너비입니다.
+     */
     private int hintBtnWidth = 510;
+
+    /**
+     * 힌트 버튼의 높이입니다.
+     */
     private int hintBtnHeight = 320;
+
+    /**
+     * HintPanel의 생성자입니다.
+     * 이 생성자는 패널의 레이아웃을 설정하고, 각종 버튼을 초기화하며, 이벤트 리스너를 추가합니다.
+     */
     public HintPanel() {
         setLayout(null);
         setOpaque(false); // InitialPanel을 투명하게 설정
@@ -118,6 +155,10 @@ public class HintPanel extends JPanel {
         add(btnIncorrect);
     }
 
+    /**
+     * 패널에 있는 모든 버튼을 다시 보이도록 설정합니다.
+     * 이 메소드는 새로운 곡으로 플레이를 시작할 때 호출되어 패널을 초기 상태로 리셋합니다.
+     */
     public void resetPanel() {
         // 모든 버튼을 보이게 설정
         btnSpace.setVisible(true);

@@ -4,33 +4,108 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * WordPopcorn 클래스는 게임의 메인 윈도우를 나타내는 프레임을 구현합니다.
+ * 이 클래스는 게임의 다양한 패널을 관리하고, 현재 선택된 노래의 이름을 추적합니다.
+ *
+ * @author Tam Oh
+ */
 public class WordPopcorn extends JFrame {
-    private String currentSongName; // 현재 노래 제목을 저장하는 변수
-    private JLayeredPane layeredPane;
+    /**
+     * 현재 선택된 노래의 제목을 저장하는 변수입니다.
+     */
+    private String currentSongName;
+
+    /**
+     * 여러 패널을 포함하는 JLayeredPane입니다.
+     */
+    private final JLayeredPane layeredPane;
+
+    /**
+     * 여러 패널을 전환하기 위한 CardLayout입니다.
+     */
     private final CardLayout cardLayout = new CardLayout();
-    private final JPanel cardPanel; // 이제 cardPanel을 클래스의 필드로 선언하였습니다.
-    private BackgroundPanel backgroundPanel;
-    private MessagePanel slowDownPanel, gradingPanel, editingPanel;
-    private InitialPanel initialPanel;
-    private SongSelectPanel songSelectPanel;
-    private SongInfoPanel songInfoPanel;
-    private MainPanel mainPanel;
-    private HintPanel hintPanel;
-    private SuccessPanel successPanel;
-    private FailPanel failPanel;
+
+    /**
+     * CardLayout을 사용하는 JPanel입니다. 게임의 다양한 화면이 이 패널에 추가됩니다.
+     */
+    private final JPanel cardPanel;
+
+    /**
+     * 게임의 배경을 표시하는 패널입니다.
+     */
+    private final BackgroundPanel backgroundPanel;
+
+    /**
+     * 게임이 느리게 듣기 힌트를 선택했음을 알리는 메시지 패널입니다.
+     */
+    private final MessagePanel slowDownPanel;
+
+    /**
+     * 평가 중임을 알리는 메시지 패널입니다.
+     */
+    private final MessagePanel gradingPanel;
+
+    /**
+     * 가사판 수정중임을 알리는 메시지 패널입니다.
+     */
+    private final MessagePanel editingPanel;
+
+    /**
+     * 게임 시작 시 보여지는 초기 패널입니다.
+     */
+    private final InitialPanel initialPanel;
+
+    /**
+     * 노래 선택을 위한 패널입니다.
+     */
+    private final SongSelectPanel songSelectPanel;
+
+    /**
+     * 선택된 노래의 정보를 표시하는 패널입니다.
+     */
+    private final SongInfoPanel songInfoPanel;
+
+    /**
+     * 게임의 메인 화면을 표시하는 패널입니다.
+     */
+    private final MainPanel mainPanel;
+
+    /**
+     * 게임 힌트를 표시하는 패널입니다.
+     */
+    private final HintPanel hintPanel;
+
+    /**
+     * 게임 성공 시 보여지는 패널입니다.
+     */
+    private final SuccessPanel successPanel;
+
+    /**
+     * 게임 실패 시 보여지는 패널입니다.
+     */
+    private final FailPanel failPanel;
+
+    /**
+     * WordPopcorn 클래스의 생성자.
+     * 게임의 주요 GUI 구성 요소를 초기화하고 배치합니다.
+     *
+     * @throws IOException 파일 입출력 예외가 발생할 수 있습니다.
+     * @throws FontFormatException 폰트 형식 예외가 발생할 수 있습니다.
+     */
     public WordPopcorn() throws IOException, FontFormatException {
         // 레이어드 팬 생성
         layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(1400, 775)); // 레이어드 팬의 선호 사이즈 설정
+        layeredPane.setPreferredSize(new Dimension(1400, 775));
 
         // 배경 패널 설정
         backgroundPanel = new BackgroundPanel();
-        backgroundPanel.setBounds(0, 0, 1400, 775); // 배경 패널의 크기와 위치 설정
+        backgroundPanel.setBounds(0, 0, 1400, 775);
 
         // 카드 패널 설정
         cardPanel = new JPanel(cardLayout); // 여기에서 초기화하였습니다.
         cardPanel.setOpaque(false); // 카드 패널을 투명하게 설정하여 배경이 보이도록 함
-        cardPanel.setBounds(0, 0, 1400, 775); // 카드 패널의 크기와 위치 설정
+        cardPanel.setBounds(0, 0, 1400, 775);
 
         // 패널 추가
         initialPanel = new InitialPanel(); // 초기 패널 인스턴스 생성
@@ -60,24 +135,56 @@ public class WordPopcorn extends JFrame {
         layeredPane.add(cardPanel, Integer.valueOf(2)); // 카드 패널은 레이어 2에 추가
 
         // JFrame 설정
+        setTitle("Word Popcorn");
         setContentPane(layeredPane);
-        setSize(1400, 800);
+        setSize(1400, 803);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+    /**
+     * 현재 노래의 이름을 설정하는 메소드.
+     *
+     * @param name 설정할 노래의 이름입니다.
+     */
     public void setCurrentSongName(String name) {
         this.currentSongName = name;
     }
+
+    /**
+     * 현재 노래의 이름을 반환하는 메소드.
+     *
+     * @return 현재 설정된 노래의 이름입니다.
+     */
     public String getCurrentSongName() {
         return this.currentSongName;
     }
+
+    /**
+     * 지정된 이름의 카드(패널)을 보여주는 메소드.
+     * 이 메소드는 CardLayout을 사용하여 카드 패널 중 하나를 표시합니다.
+     *
+     * @param cardName 보여줄 카드의 이름입니다.
+     */
     public void showCard(String cardName) {
         cardLayout.show(cardPanel, cardName);
     }
+
+    /**
+     * CardPanel을 반환하는 메소드.
+     *
+     * @return 현재 객체의 cardPanel 필드를 반환합니다.
+     */
     public JPanel getCardPanel() {
-        return this.cardPanel; // 'this'는 현재 객체를 참조하며, cardPanel 필드를 반환합니다.
+        return this.cardPanel;
     }
+
+    /**
+     * 애플리케이션의 메인 메소드. 프로그램을 시작합니다.
+     *
+     * @param args 명령줄 인자들입니다.
+     */
     public static void main(String[] args) {
         // GUI 실행
         SwingUtilities.invokeLater(() -> {

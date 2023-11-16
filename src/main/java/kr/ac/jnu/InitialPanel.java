@@ -3,10 +3,37 @@ package kr.ac.jnu;
 import javax.swing.*;
 import java.util.Objects;
 
+/**
+ * 이 클래스는 애플리케이션의 초기 화면을 나타내는 패널을 구현합니다.
+ * 게임을 시작하거나 종료할 수 있는 버튼과 게임 플레이 가이드를 보여주는 버튼이 포함되어 있습니다.
+ *
+ * @author Tam Oh
+ */
 public class InitialPanel extends JPanel {
-    private JButton btnAccess, btnExit, btnPlayGuide;
+    /**
+     * 게임을 시작하기 위한 버튼입니다.
+     */
+    private JButton btnAccess;
+
+    /**
+     * 애플리케이션을 종료하기 위한 버튼입니다.
+     */
+    private JButton btnExit;
+
+    /**
+     * 게임 플레이 가이드를 보여주기 위한 버튼입니다.
+     */
+    private JButton btnPlayGuide;
+
+    /**
+     * 타이틀 이미지를 표시하기 위한 레이블입니다.
+     */
     private JLabel labelTitle;
 
+    /**
+     * InitialPanel의 생성자입니다.
+     * 이 생성자는 패널의 레이아웃을 설정하고, 필요한 버튼과 타이틀 라벨을 초기화합니다.
+     */
     public InitialPanel() {
         setLayout(null);
         setOpaque(false); // InitialPanel을 투명하게 설정
@@ -42,10 +69,14 @@ public class InitialPanel extends JPanel {
         add(btnPlayGuide);
     }
 
+    /**
+     * 게임 플레이 방법을 보여주는 창을 표시합니다.
+     * 이 메소드는 게임 플레이 가이드 버튼이 눌렸을 때 호출됩니다.
+     */
     private void showGamePlayInfo() {
         JFrame infoFrame = new JFrame("게임 플레이 방법");
-        PlayGuidePanel infoPanel = new PlayGuidePanel("/Image/guideimg.png");
-        infoFrame.add(infoPanel);
+        PlayGuidePanel guidePanel = new PlayGuidePanel("/Image/guideimg.png");
+        infoFrame.add(guidePanel);
         infoFrame.pack();
         infoFrame.setLocationRelativeTo(null);
         infoFrame.setVisible(true);
