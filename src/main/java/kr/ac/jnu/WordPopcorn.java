@@ -36,6 +36,8 @@ public class WordPopcorn extends JFrame {
      */
     private final BackgroundPanel backgroundPanel;
 
+    private LoadingPanel loadingPanel;
+
     /**
      * 게임이 느리게 듣기 힌트를 선택했음을 알리는 메시지 패널입니다.
      */
@@ -118,6 +120,7 @@ public class WordPopcorn extends JFrame {
         editingPanel = new MessagePanel("/Image/Sign/editing.png", 1000, 500, 200, 140);
         slowDownPanel = new MessagePanel("/Image/Sign/slowdown.png", 1180, 500, 110, 140);
         gradingPanel = new MessagePanel("/Image/Sign/grading.png", 900, 300, 290, 240);
+        loadingPanel = new LoadingPanel("/Image/Sign/loading.png");
 
         cardPanel.add(initialPanel, "InitialPanel");
         cardPanel.add(songSelectPanel, "SongSelectPanel"); // cardPanel에 SongSelectPanel 추가
@@ -129,6 +132,7 @@ public class WordPopcorn extends JFrame {
         cardPanel.add(editingPanel, "EditingPanel");
         cardPanel.add(slowDownPanel, "SlowDownPanel");
         cardPanel.add(gradingPanel, "GradingPanel");
+        cardPanel.add(loadingPanel, "LoadingPanel");
 
         // 레이어드 팬에 배경 패널과 카드 패널을 추가
         layeredPane.add(backgroundPanel, Integer.valueOf(1)); // 배경은 레이어 1에 추가
@@ -141,6 +145,14 @@ public class WordPopcorn extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // 로딩 패널을 먼저 보여줍니다.
+        showCard("LoadingPanel");
+
+        // 로딩 처리 (시뮬레이션을 위해 타이머 사용)
+        Timer timer = new Timer(6000, e -> SwingUtilities.invokeLater(() -> showCard("InitialPanel")));
+        timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정
+        timer.start();
     }
 
     /**
@@ -180,22 +192,32 @@ public class WordPopcorn extends JFrame {
         return this.cardPanel;
     }
 
+    public void startLoading() {
+        // 로딩 패널을 보여줍니다.
+        showCard("LoadingPanel");
+
+        // 로딩 처리를 위한 타이머 생성
+        Timer timer = new Timer(6000, e -> SwingUtilities.invokeLater(() -> showCard("InitialPanel")));
+
+        timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정
+        timer.start(); // 타이머 시작
+    }
+
     /**
      * 애플리케이션의 메인 메소드. 프로그램을 시작합니다.
      *
      * @param args 명령줄 인자들입니다.
      */
     public static void main(String[] args) {
-        // GUI 실행
         SwingUtilities.invokeLater(() -> {
-            WordPopcorn frame = null;
+            WordPopcorn frame;
             try {
                 frame = new WordPopcorn();
+                frame.setVisible(true);
+                frame.startLoading(); // 로딩 프로세스 시작
             } catch (IOException | FontFormatException e) {
                 throw new RuntimeException(e);
             }
-            frame.cardLayout.show(frame.cardPanel, "InitialPanel"); // 프로그램 시작 시 InitialPanel 보이기
-            frame.setVisible(true);
         });
     }
 }
