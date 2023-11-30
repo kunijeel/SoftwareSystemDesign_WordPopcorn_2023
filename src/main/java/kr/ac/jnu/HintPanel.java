@@ -83,7 +83,7 @@ public class HintPanel extends JPanel {
                 String positionStr = JOptionPane.showInputDialog(this, "원하는 한 글자의 위치에 해당하는 번호를 입력해 주세요 (첫 글자는 1번). 취소하시면 다시 힌트판으로 돌아갑니다.");
                 if (positionStr == null || positionStr.isEmpty()) {
                     // 사용자가 취소하거나 빈 문자열을 입력한 경우 루프 종료
-                    wordPopcorn.showCard("HintPanel"); // MainPanel로 전환
+                    wordPopcorn.showCard("HintPanel");
                     break;
                 }
 

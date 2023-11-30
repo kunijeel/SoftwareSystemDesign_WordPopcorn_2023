@@ -70,6 +70,8 @@ public class MainPanel extends JPanel {
      */
     private JButton btnPlaySlow;
 
+    private JButton btnBonus;
+
     /**
      * 사용자가 답안을 입력하는 텍스트 영역입니다.
      */
@@ -238,6 +240,11 @@ public class MainPanel extends JPanel {
             }
         });
 
+        btnBonus = new JButton();
+        UIUtils.setButtonGraphics(btnBonus, "/Image/Button/bonus.png", 1300, 215);
+        btnBonus.setBounds(50, 560, 1300, 215);
+        btnBonus.setVisible(false);
+        btnBonus.addActionListener(e -> btnBonus.setVisible(false));
 
         labelBoard = new JLabel();
         labelBoard.setBounds(50, 50, imageWidth, imageHeight); // x, y 위치와 너비, 높이 설정 (크기 조정된 값을 사용)
@@ -264,6 +271,7 @@ public class MainPanel extends JPanel {
         customFont = customFont.deriveFont(30f); // 폰트 크기 30f로 설정
         answerTextArea.setFont(customFont);
 
+        add(btnBonus);
         add(labelRound);
         add(labelBoard);
         add(btnPlaySlow);
@@ -429,6 +437,7 @@ public class MainPanel extends JPanel {
     public void updateRoundLabel() {
         ImageIcon iconRound = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/round" + (currentRound + 1) + ".png")));
         labelRound.setIcon(UIUtils.resizeImageIcon(iconRound, 240, 80));
+        btnBonus.setVisible(currentRound == 2);
     }
 
     /**

@@ -145,14 +145,6 @@ public class WordPopcorn extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // 로딩 패널을 먼저 보여줍니다.
-        showCard("LoadingPanel");
-
-        // 로딩 처리 (시뮬레이션을 위해 타이머 사용)
-        Timer timer = new Timer(6000, e -> SwingUtilities.invokeLater(() -> showCard("InitialPanel")));
-        timer.setRepeats(false); // 타이머가 한 번만 실행되도록 설정
-        timer.start();
     }
 
     /**
@@ -214,7 +206,7 @@ public class WordPopcorn extends JFrame {
             try {
                 frame = new WordPopcorn();
                 frame.setVisible(true);
-                frame.startLoading(); // 로딩 프로세스 시작
+                frame.startLoading();
             } catch (IOException | FontFormatException e) {
                 throw new RuntimeException(e);
             }
