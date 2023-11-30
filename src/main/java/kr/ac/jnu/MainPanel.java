@@ -244,7 +244,10 @@ public class MainPanel extends JPanel {
         UIUtils.setButtonGraphics(btnBonus, "/Image/Button/bonus.png", 1300, 215);
         btnBonus.setBounds(50, 560, 1300, 215);
         btnBonus.setVisible(false);
-        btnBonus.addActionListener(e -> btnBonus.setVisible(false));
+        btnBonus.addActionListener(e -> {
+            btnBonus.setVisible(false);
+            //new MiniGameFrame();
+        });
 
         labelBoard = new JLabel();
         labelBoard.setBounds(50, 50, imageWidth, imageHeight); // x, y 위치와 너비, 높이 설정 (크기 조정된 값을 사용)

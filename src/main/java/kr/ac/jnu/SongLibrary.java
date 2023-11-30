@@ -16,13 +16,17 @@ public class SongLibrary {
      */
     private Map<String, String> songMap;
 
+    private Map<String, String> hintMap;
+
     /**
      * SongLibrary의 생성자.
-     * 새로운 HashMap을 생성하고 노래 정보를 초기화합니다.
+     * 새로운 HashMap을 생성하고 노래 정보와 힌트를 초기화합니다.
      */
     public SongLibrary() {
         songMap = new HashMap<>();
+        hintMap = new HashMap<>();
         initializeSongs();
+        initializeHints();
     }
 
     /**
@@ -37,6 +41,14 @@ public class SongLibrary {
         songMap.put("zero", "뉴진스제로");
     }
 
+    private void initializeHints() {
+        // 힌트 정보 추가
+        hintMap.put("eta", "이티에이에 대한 힌트");
+        hintMap.put("hypeboy", "하입보이에 대한 힌트");
+        hintMap.put("omg", "오엠지에 대한 힌트");
+        hintMap.put("zero", "제로에 대한 힌트");
+    }
+
     /**
      * 주어진 노래 제목에 해당하는 가사를 반환하는 메소드.
      *
@@ -45,5 +57,9 @@ public class SongLibrary {
      */
     public String getLyricsByTitle(String title) {
         return songMap.get(title);
+    }
+
+    public String getHintByTitle(String title) {
+        return hintMap.getOrDefault(title, "힌트가 없습니다"); // 해당 제목의 힌트가 없으면 기본 메시지 반환
     }
 }
