@@ -246,7 +246,8 @@ public class MainPanel extends JPanel {
         btnBonus.setVisible(false);
         btnBonus.addActionListener(e -> {
             btnBonus.setVisible(false);
-            //new MiniGameFrame();
+            MiniGameFrame miniGameFrame = new MiniGameFrame();
+            miniGameFrame.setVisible(true);
         });
 
         labelBoard = new JLabel();
