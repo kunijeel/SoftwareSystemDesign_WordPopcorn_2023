@@ -246,8 +246,6 @@ public class MainPanel extends JPanel {
         btnBonus.setVisible(false);
         btnBonus.addActionListener(e -> {
             btnBonus.setVisible(false);
-            MiniGameFrame miniGameFrame = new MiniGameFrame();
-            miniGameFrame.setVisible(true);
         });
 
         labelBoard = new JLabel();
@@ -441,7 +439,7 @@ public class MainPanel extends JPanel {
     public void updateRoundLabel() {
         ImageIcon iconRound = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/round" + (currentRound + 1) + ".png")));
         labelRound.setIcon(UIUtils.resizeImageIcon(iconRound, 240, 80));
-        btnBonus.setVisible(currentRound == 2);
+        btnBonus.setVisible(currentRound == 1);
     }
 
     /**
