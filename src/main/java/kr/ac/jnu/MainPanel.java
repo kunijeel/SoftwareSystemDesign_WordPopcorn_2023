@@ -246,6 +246,7 @@ public class MainPanel extends JPanel {
         btnBonus.setVisible(false);
         btnBonus.addActionListener(e -> {
             btnBonus.setVisible(false);
+            ((WordPopcorn)SwingUtilities.getWindowAncestor(this)).showCard("MiniGamePanel");
         });
 
         labelBoard = new JLabel();
