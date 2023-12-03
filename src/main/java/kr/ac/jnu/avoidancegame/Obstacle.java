@@ -12,10 +12,12 @@ public abstract class Obstacle extends JLabel {
     protected int x, y;
     protected int dx, dy; // 이동 속도
     protected ImageIcon image;
+    protected String imagePath; // 이미지 경로를 저장하는 필드 추가
     protected final int GAME_WIDTH = 800;
     protected final int GAME_HEIGHT = 775;
 
     public Obstacle(String imagePath) {
+        this.imagePath = imagePath;
         this.image = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
         setIcon(UIUtils.resizeImageIcon(image, 30, 30));
         setSize(30, 30);

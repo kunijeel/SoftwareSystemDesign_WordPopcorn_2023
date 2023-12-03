@@ -42,4 +42,3 @@ public class Item extends JLabel {
         disappearTimer.start();
     }
 }
-

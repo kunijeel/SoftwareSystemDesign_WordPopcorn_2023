@@ -43,10 +43,12 @@ public class AvoidanceGameFrame extends JFrame {
 
             if (chance < 50) {
                 obstacle = new Obstacle1("/Image/avoidancegame/obstacle1.png", player, this, timer);
-            } else if (chance < 65) {
+            } else if (chance < 60) {
                 obstacle = new Obstacle2("/Image/avoidancegame/obstacle2.png", player, this, timer);
-            } else {
+            } else if (chance < 80) { // 예를 들어, 65부터 80 사이의 확률로 Obstacle3 생성
                 obstacle = new Obstacle3("/Image/avoidancegame/obstacle3.png", player, this, timer);
+            } else { // 80 이상의 확률로 Obstacle4 생성
+                obstacle = new Obstacle4("/Image/avoidancegame/obstacle4.png", player, this, timer);
             }
             add(obstacle);
             repaint();

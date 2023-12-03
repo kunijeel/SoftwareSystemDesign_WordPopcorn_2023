@@ -7,15 +7,14 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Random;
 
-public class Obstacle3 extends Obstacle {
+public class Obstacle4 extends Obstacle {
     private AvoidanceGameFrame gameFrame;
+    private Timer splitTimer;
     private volatile boolean running = true;
     private Player player;
-    private Timer moveTimer;
-    private Random random = new Random();
     private Timer timer;
 
-    public Obstacle3(String imagePath, Player player, AvoidanceGameFrame gameFrame, Timer gameTimer) {
+    public Obstacle4(String imagePath, Player player, AvoidanceGameFrame gameFrame, Timer gameTimer) {
         super(imagePath);
         this.player = player;
         this.gameFrame = gameFrame;
@@ -23,7 +22,7 @@ public class Obstacle3 extends Obstacle {
 
         initMovement();
         startMoving();
-        new Thread(this::startMovingThread).start(); // 새로운 스레드 시작
+        startSplitTimer();
     }
 
     private void initMovement() {
@@ -35,27 +34,44 @@ public class Obstacle3 extends Obstacle {
         dy = (int) (speed * Math.sin(angle));
     }
 
-    private void startMovingThread() {
-        while (running) {
-            try {
-                move();
-                Thread.sleep(10); // 움직임 업데이트 주기
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            } catch (IOException | FontFormatException e) {
-                e.printStackTrace();
+    private void startMoving() {
+        new Thread(() -> {
+            while (running) {
+                try {
+                    move();
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (IOException | FontFormatException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        }).start();
     }
 
-    private void startMoving() {
-        moveTimer = new Timer(1000, e -> {
-            int speed = random.nextInt(4) + 2;
-            double angle = random.nextDouble() * 2 * Math.PI;
-            dx = (int) (speed * Math.cos(angle));
-            dy = (int) (speed * Math.sin(angle));
+    private void startSplitTimer() {
+        splitTimer = new Timer(1000, e -> splitObstacle());
+        splitTimer.setRepeats(false);
+        splitTimer.start();
+    }
+
+    private void splitObstacle() {
+        // 장애물을 4개로 분할하고 각각의 방향 설정
+        running = false; // 원래 장애물의 이동을 중지
+        SwingUtilities.invokeLater(() -> {
+            Container parent = getParent();
+            if (parent != null) {
+                parent.remove(this);
+                parent.repaint();
+
+                // 분할된 장애물 생성 및 추가
+                for (int i = 0; i < 4; i++) {
+                    SmallObstacle smallObstacle = new SmallObstacle(x, y, i, this.imagePath, gameFrame, player, timer);
+                    parent.add(smallObstacle);
+                    smallObstacle.startMoving(); // 각각의 작은 장애물을 움직임 시작
+                }
+            }
         });
-        moveTimer.start();
     }
 
     @Override
