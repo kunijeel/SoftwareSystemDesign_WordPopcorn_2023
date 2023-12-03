@@ -39,7 +39,7 @@ public class Obstacle2 extends Obstacle {
         int centerX = GAME_WIDTH / 2;
         int centerY = GAME_HEIGHT / 2;
         double angle = Math.atan2(centerY - y, centerX - x);
-        int speed = 7; // 이동 속도
+        int speed = 6; // 이동 속도
         dx = (int) (speed * Math.cos(angle));
         dy = (int) (speed * Math.sin(angle));
     }

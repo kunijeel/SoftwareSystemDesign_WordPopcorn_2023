@@ -30,7 +30,7 @@ public class Obstacle3 extends Obstacle {
         int centerX = GAME_WIDTH / 2;
         int centerY = GAME_HEIGHT / 2;
         double angle = Math.atan2(centerY - y, centerX - x);
-        int speed = 3; // 이동 속도
+        int speed = 2; // 이동 속도
         dx = (int) (speed * Math.cos(angle));
         dy = (int) (speed * Math.sin(angle));
     }
@@ -50,7 +50,7 @@ public class Obstacle3 extends Obstacle {
 
     private void startMoving() {
         moveTimer = new Timer(1000, e -> {
-            int speed = random.nextInt(4) + 2;
+            int speed = random.nextInt(3) + 2;
             double angle = random.nextDouble() * 2 * Math.PI;
             dx = (int) (speed * Math.cos(angle));
             dy = (int) (speed * Math.sin(angle));

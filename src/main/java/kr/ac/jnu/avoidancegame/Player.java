@@ -35,8 +35,8 @@ public class Player extends JLabel implements Moveable {
         up = false;
         down = false;
 
-        setIcon(UIUtils.resizeImageIcon(player, 30, 30));
-        setSize(30,30);
+        setIcon(UIUtils.resizeImageIcon(player, 40, 40));
+        setSize(40,40);
         setLocation(x, y);
     }
 

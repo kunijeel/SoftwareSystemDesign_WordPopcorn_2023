@@ -23,14 +23,14 @@ public class SmallObstacle extends Obstacle {
         this.timer = timer;
         this.localX = x;
         this.localY = y;
-        setIcon(UIUtils.resizeImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath))), 15, 15));
-        setSize(15, 15);
+        setIcon(UIUtils.resizeImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath))), 20, 20));
+        setSize(20, 20);
         setLocation(localX, localY);
         initMovement(direction);
     }
 
     private void initMovement(int direction) {
-        int speed = 3;
+        int speed = 2;
         switch (direction) {
             case 0: // 북
                 localDx = 0;

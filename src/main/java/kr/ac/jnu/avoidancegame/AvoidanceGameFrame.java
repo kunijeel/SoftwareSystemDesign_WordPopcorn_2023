@@ -12,20 +12,25 @@ import java.util.Random;
 
 public class AvoidanceGameFrame extends JFrame {
     private JLabel labelBackground;
+    private JLabel labelCount;
     private Player player;
     private Timer timer;
     private Timer itemSpawnTimer;
     private boolean isGameOver = false; // 게임 오버 상태 관리
     private int collectedItems = 0;
     public AvoidanceGameFrame() {
-        initObject();
         initSetting();
+        initObject();
         initListener();
         setVisible(true);
     }
     private void initObject() {
         labelBackground = new JLabel(new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/AvoidanceGame/background.png"))));
         setContentPane(labelBackground);
+
+        labelCount = new JLabel("Shrimps: 0 / 3");
+        labelCount.setBounds(10, 10, 150, 30);
+        add(labelCount);
 
         player = new Player();
         add(player);
@@ -45,9 +50,9 @@ public class AvoidanceGameFrame extends JFrame {
                 obstacle = new Obstacle1("/Image/avoidancegame/obstacle1.png", player, this, timer);
             } else if (chance < 60) {
                 obstacle = new Obstacle2("/Image/avoidancegame/obstacle2.png", player, this, timer);
-            } else if (chance < 80) { // 예를 들어, 65부터 80 사이의 확률로 Obstacle3 생성
+            } else if (chance < 80) {
                 obstacle = new Obstacle3("/Image/avoidancegame/obstacle3.png", player, this, timer);
-            } else { // 80 이상의 확률로 Obstacle4 생성
+            } else {
                 obstacle = new Obstacle4("/Image/avoidancegame/obstacle4.png", player, this, timer);
             }
             add(obstacle);
@@ -63,6 +68,7 @@ public class AvoidanceGameFrame extends JFrame {
     }
     public void collectItem() throws IOException, FontFormatException {
         collectedItems++;
+        labelCount.setText("Shrimps: " + collectedItems + " / 3");
         if (collectedItems >= 3) {
             itemSpawnTimer.stop();
             timer.stop();
@@ -76,6 +82,8 @@ public class AvoidanceGameFrame extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setTitle("The Adventures of Mulgae");
     }
     private void initListener() {
         addKeyListener(new KeyAdapter() {

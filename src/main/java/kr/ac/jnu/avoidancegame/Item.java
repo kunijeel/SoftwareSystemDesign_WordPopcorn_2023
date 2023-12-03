@@ -19,19 +19,19 @@ public class Item extends JLabel {
 
     private void initObject() {
         itemIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/AvoidanceGame/item.png")));
-        setIcon(UIUtils.resizeImageIcon(itemIcon, 30, 30));
+        setIcon(UIUtils.resizeImageIcon(itemIcon, 60, 60));
     }
 
     private void initSetting() {
         Random rand = new Random();
-        int x = rand.nextInt(800 - getWidth());
-        int y = rand.nextInt(775 - getHeight());
+        int x = rand.nextInt(740);
+        int y = rand.nextInt(715);
         setLocation(x, y);
-        setSize(30, 30);
+        setSize(60, 60);
     }
 
     private void startDisappearingTimer() {
-        disappearTimer = new Timer(3000, e -> {
+        disappearTimer = new Timer(2000, e -> {
             Container parent = getParent();
             if (parent != null) {
                 parent.remove(this);

@@ -19,8 +19,8 @@ public abstract class Obstacle extends JLabel {
     public Obstacle(String imagePath) {
         this.imagePath = imagePath;
         this.image = new ImageIcon(Objects.requireNonNull(getClass().getResource(imagePath)));
-        setIcon(UIUtils.resizeImageIcon(image, 30, 30));
-        setSize(30, 30);
+        setIcon(UIUtils.resizeImageIcon(image, 40, 40));
+        setSize(40, 40);
         initPosition();
     }
 
@@ -48,8 +48,6 @@ public abstract class Obstacle extends JLabel {
         setLocation(x, y);
     }
     protected boolean isOutOfBounds() {
-        // 장애물이 화면 경계를 벗어났는지 확인
-        // 여기서 x, y는 장애물의 현재 위치, GAME_WIDTH와 GAME_HEIGHT는 화면의 크기
         return x < 0 || x > GAME_WIDTH || y < 0 || y > GAME_HEIGHT;
     }
     public abstract void move() throws IOException, FontFormatException;
