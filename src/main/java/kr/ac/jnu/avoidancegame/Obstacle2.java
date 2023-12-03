@@ -6,12 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class Obstacle1 extends Obstacle {
+public class Obstacle2 extends Obstacle {
     private Player player;
     private AvoidanceGameFrame gameFrame;
     private Timer timer;
     private volatile boolean running = true; // 스레드 실행 상태를 관리하는 변수
-    public Obstacle1(String imagePath, Player player,AvoidanceGameFrame gameFrame, Timer timer) {
+    public Obstacle2(String imagePath, Player player,AvoidanceGameFrame gameFrame, Timer timer) {
         super(imagePath);
         this.player = player;
         this.timer = timer;
@@ -39,7 +39,7 @@ public class Obstacle1 extends Obstacle {
         int centerX = GAME_WIDTH / 2;
         int centerY = GAME_HEIGHT / 2;
         double angle = Math.atan2(centerY - y, centerX - x);
-        int speed = 4; // 이동 속도
+        int speed = 8; // 이동 속도
         dx = (int) (speed * Math.cos(angle));
         dy = (int) (speed * Math.sin(angle));
     }

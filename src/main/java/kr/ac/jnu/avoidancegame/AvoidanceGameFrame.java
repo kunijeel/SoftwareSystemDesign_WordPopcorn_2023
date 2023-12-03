@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 public class AvoidanceGameFrame extends JFrame {
     private JLabel labelBackground;
@@ -36,7 +37,13 @@ public class AvoidanceGameFrame extends JFrame {
         itemSpawnTimer.start();
 
         timer = new Timer(1000, e -> {
-            Obstacle1 obstacle = new Obstacle1("/Image/avoidancegame/obstacle1.png", player, this, timer);
+            Random random = new Random();
+            Obstacle obstacle;
+            if (random.nextInt(100) < 70) { // 70% 확률로 Obstacle1 생성
+                obstacle = new Obstacle1("/Image/avoidancegame/obstacle1.png", player, this, timer);
+            } else { // 나머지 30% 확률로 Obstacle2 생성
+                obstacle = new Obstacle2("/Image/avoidancegame/obstacle2.png", player, this, timer);
+            }
             add(obstacle);
             repaint();
         });
