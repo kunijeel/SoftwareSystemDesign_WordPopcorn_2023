@@ -5,44 +5,59 @@ import kr.ac.jnu.CustomInfoDialog;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Random;
 
-public class Obstacle2 extends Obstacle {
-    private Player player;
+public class Obstacle3 extends Obstacle {
     private AvoidanceGameFrame gameFrame;
+    private volatile boolean running = true;
+    private Player player;
+    private Timer moveTimer;
+    private Random random = new Random();
     private Timer timer;
-    private volatile boolean running = true; // 스레드 실행 상태를 관리하는 변수
-    public Obstacle2(String imagePath, Player player,AvoidanceGameFrame gameFrame, Timer timer) {
+
+    public Obstacle3(String imagePath, Player player, AvoidanceGameFrame gameFrame, Timer gameTimer) {
         super(imagePath);
         this.player = player;
-        this.timer = timer;
         this.gameFrame = gameFrame;
+        this.timer = gameTimer;
+
         initMovement();
         startMoving();
+        new Thread(this::startMovingThread).start(); // 새로운 스레드 시작
     }
-    private void startMoving() {
-        new Thread(() -> {
-            while (running) {
-                try {
-                    move();
-                } catch (IOException | FontFormatException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    Thread.sleep(10); // 이동 속도 조절
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // 스레드 인터럽트 상태 설정
-                }
-            }
-        }).start();
-    }
+
     private void initMovement() {
         int centerX = GAME_WIDTH / 2;
         int centerY = GAME_HEIGHT / 2;
         double angle = Math.atan2(centerY - y, centerX - x);
-        int speed = 7; // 이동 속도
+        int speed = 3; // 이동 속도
         dx = (int) (speed * Math.cos(angle));
         dy = (int) (speed * Math.sin(angle));
     }
+
+    private void startMovingThread() {
+        while (running) {
+            try {
+                move();
+                Thread.sleep(10); // 움직임 업데이트 주기
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } catch (IOException | FontFormatException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void startMoving() {
+        moveTimer = new Timer(1000, e -> {
+            int speed = random.nextInt(4) + 2;
+            double angle = random.nextDouble() * 2 * Math.PI;
+            dx = (int) (speed * Math.cos(angle));
+            dy = (int) (speed * Math.sin(angle));
+        });
+        moveTimer.start();
+    }
+
     @Override
     public void move() throws IOException, FontFormatException {
         x += dx;

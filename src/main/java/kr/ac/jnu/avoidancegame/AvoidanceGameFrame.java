@@ -36,13 +36,17 @@ public class AvoidanceGameFrame extends JFrame {
         });
         itemSpawnTimer.start();
 
-        timer = new Timer(1000, e -> {
+        timer = new Timer(500, e -> {
             Random random = new Random();
+            int chance = random.nextInt(100);
             Obstacle obstacle;
-            if (random.nextInt(100) < 70) { // 70% 확률로 Obstacle1 생성
+
+            if (chance < 50) {
                 obstacle = new Obstacle1("/Image/avoidancegame/obstacle1.png", player, this, timer);
-            } else { // 나머지 30% 확률로 Obstacle2 생성
+            } else if (chance < 65) {
                 obstacle = new Obstacle2("/Image/avoidancegame/obstacle2.png", player, this, timer);
+            } else {
+                obstacle = new Obstacle3("/Image/avoidancegame/obstacle3.png", player, this, timer);
             }
             add(obstacle);
             repaint();
