@@ -1,5 +1,7 @@
 package kr.ac.jnu;
 
+import kr.ac.jnu.avoidancegame.AvoidanceGameFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;

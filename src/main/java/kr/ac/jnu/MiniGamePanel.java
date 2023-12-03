@@ -1,5 +1,7 @@
 package kr.ac.jnu;
 
+import kr.ac.jnu.avoidancegame.AvoidanceGameFrame;
+
 import javax.swing.*;
 import java.util.Objects;
 
@@ -12,10 +14,11 @@ public class MiniGamePanel extends JPanel {
         setOpaque(false);
 
         btnGameA = new JButton();
-        UIUtils.setButtonGraphics(btnGameA,"/Image/Button/miniA.png", 500, 150);
+        UIUtils.setButtonGraphics(btnGameA,"/Image/Button/gameA.png", 500, 150);
         btnGameA.setBounds(450, 270, 500, 150);
         btnGameA.addActionListener(e -> {
             ((WordPopcorn)SwingUtilities.getWindowAncestor(this)).showCard("MainPanel");
+            new AvoidanceGameFrame();
         });
 
         labelBonusHint = new JLabel();
