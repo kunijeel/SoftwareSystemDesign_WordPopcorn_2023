@@ -147,7 +147,7 @@ public class AvoidanceGameFrame extends JFrame {
             this.setGameOver();
             String currentSongName = mainPanel.getCurrentSongName();
             String hint = mainPanel.getSongLibrary().getHintByTitle(currentSongName);
-            CustomInfoDialog.showInfoDialog(this, "알림", hint, 30f, 500, 300);
+            CustomInfoDialog.showInfoDialog(this, "알림", hint, 15f, 600, 200);
             this.dispose();
         }
     }

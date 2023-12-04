@@ -105,17 +105,41 @@ public class SongSelectPanel extends JPanel {
         // 앨범 이미지 로드
         albumImages = new ImageIcon[]{
                 new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_eta.png"))),
-                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_hypeboy.png"))),
-                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_zero.png"))),
-                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_omg.png")))
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_bonnie.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_break.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_drama.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_fighting.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_firetruck.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_jamjam.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_jana.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_likey.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_lovelee.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_lovemelikethis.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_pose.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_sclass.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_smoke.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_thatthat.png"))),
+                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_zero.png")))
         };
 
         // 앨범 미리보기 이미지 경로 배열 초기화
         albumPreviewPaths = new String[]{
                 "/Image/Preview/preview_eta.png",
-                "/Image/Preview/preview_hypeboy.png",
+                "/Image/Preview/preview_bonnie.png",
+                "/Image/Preview/preview_break.png",
+                "/Image/Preview/preview_drama.png",
+                "/Image/Preview/preview_fighting.png",
+                "/Image/Preview/preview_firetruck.png",
+                "/Image/Preview/preview_jamjam.png",
+                "/Image/Preview/preview_jana.png",
+                "/Image/Preview/preview_likey.png",
+                "/Image/Preview/preview_lovelee.png",
+                "/Image/Preview/preview_lovemelikethis.png",
+                "/Image/Preview/preview_pose.png",
+                "/Image/Preview/preview_sclass.png",
+                "/Image/Preview/preview_smoke.png",
+                "/Image/Preview/preview_thatthat.png",
                 "/Image/Preview/preview_zero.png",
-                "/Image/Preview/preview_omg.png"
         };
 
         // 레이블 초기화 및 위치, 크기 설정
