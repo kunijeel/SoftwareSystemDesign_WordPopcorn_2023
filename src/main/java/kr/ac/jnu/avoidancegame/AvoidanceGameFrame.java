@@ -99,13 +99,13 @@ public class AvoidanceGameFrame extends JFrame {
             Obstacle obstacle;
 
             if (chance < 50) {
-                obstacle = new Obstacle1("/Image/avoidancegame/obstacle1.png", player, this, timer);
+                obstacle = new Obstacle1("/Image/AvoidanceGame/obstacle1.png", player, this, timer);
             } else if (chance < 60) {
-                obstacle = new Obstacle2("/Image/avoidancegame/obstacle2.png", player, this, timer);
+                obstacle = new Obstacle2("/Image/AvoidanceGame/obstacle2.png", player, this, timer);
             } else if (chance < 80) {
-                obstacle = new Obstacle3("/Image/avoidancegame/obstacle3.png", player, this, timer);
+                obstacle = new Obstacle3("/Image/AvoidanceGame/obstacle3.png", player, this, timer);
             } else {
-                obstacle = new Obstacle4("/Image/avoidancegame/obstacle4.png", player, this, timer);
+                obstacle = new Obstacle4("/Image/AvoidanceGame/obstacle4.png", player, this, timer);
             }
             add(obstacle);
             repaint();
@@ -149,6 +149,16 @@ public class AvoidanceGameFrame extends JFrame {
             String hint = mainPanel.getSongLibrary().getHintByTitle(currentSongName);
             CustomInfoDialog.showInfoDialog(this, "알림", hint, 15f, 600, 200);
             this.dispose();
+        }
+    }
+
+    /**
+     * 게임 내에서 아이템 생성을 제어하는 타이머를 중지시키는 메소드입니다.
+     * 이 메소드는 아이템 생성을 중단할 필요가 있을 때 호출됩니다 (예: 게임 오버 시).
+     */
+    public void stopItemSpawnTimer() {
+        if (itemSpawnTimer != null) {
+            itemSpawnTimer.stop();
         }
     }
 

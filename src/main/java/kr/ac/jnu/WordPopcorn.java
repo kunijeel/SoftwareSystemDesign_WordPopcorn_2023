@@ -123,7 +123,7 @@ public class WordPopcorn extends JFrame {
         songInfoPanel = new SongInfoPanel();
         mainPanel = new MainPanel();
         hintPanel = new HintPanel();
-        successPanel = new SuccessPanel();
+        successPanel = new SuccessPanel(mainPanel);
         failPanel = new FailPanel();
         editingPanel = new MessagePanel("/Image/Sign/editing.png", 1000, 500, 200, 140);
         slowDownPanel = new MessagePanel("/Image/Sign/slowdown.png", 1180, 500, 110, 140);

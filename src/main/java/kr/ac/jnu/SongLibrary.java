@@ -24,14 +24,22 @@ public class SongLibrary {
     private Map<String, String> hintMap;
 
     /**
+     * 프로그램 내부에서 사용되는 노래 제목과 실제 곡 제목을 매핑하는 Map.
+     * 이 Map은 게임 내에서 사용되는 곡명(키)과 그에 해당하는 실제 곡명(값)을 저장합니다.
+     */
+    private Map<String, String> realNameMap;
+
+    /**
      * SongLibrary의 생성자.
      * 새로운 HashMap을 생성하고 노래 정보와 힌트를 초기화합니다.
      */
     public SongLibrary() {
         songMap = new HashMap<>();
         hintMap = new HashMap<>();
+        realNameMap = new HashMap<>();
         initializeSongs();
         initializeHints();
+        initializeRealNames();
     }
 
     /**
@@ -40,7 +48,6 @@ public class SongLibrary {
      */
     private void initializeSongs() {
         // 노래 정보 추가
-        songMap.put("eta", "뉴진스이티에이");
         songMap.put("bonnie", "아예속도를최대로올린채로롤링스톤즈의노래를플레이온");
         songMap.put("break", "너넨모두줄자가됐어맨날재고재서난삐뚤하고싶어");
         songMap.put("drama", "후회없어난맞서난깨버렸지날따라서움직일룰즈");
@@ -65,7 +72,6 @@ public class SongLibrary {
      */
     private void initializeHints() {
         // 힌트 정보 추가
-        hintMap.put("eta", "eta에 대한 힌트");
         hintMap.put("bonnie", "추가 정보 : 호감이 있는 여사친과 드라이브를 하는 상황을 표현한 노래");
         hintMap.put("break", "추가 정보 : 타인의 기준에 맞춰 살지 않겠다는 의지를 표현한 노래");
         hintMap.put("drama", "영어 단어 : 1개 (복수형)");
@@ -81,6 +87,28 @@ public class SongLibrary {
         hintMap.put("smoke", "추가 정보 : 노 리스펙 상대를 디스하는 내용");
         hintMap.put("thatthat", "추가 정보 : 내가 어떤 사람이었는지를 상기시키는 내용");
         hintMap.put("zero", "추가 정보 : 상대방에게 플러팅 당한 순간을 표현한 내용");
+    }
+
+    /**
+     * 실제 곡명을 초기화하는 메소드.
+     * 여기에서 프로그램 내 곡명과 실제 곡명을 realNameMap에 추가합니다.
+     */
+    private void initializeRealNames() {
+        realNameMap.put("bonnie", "bonnie & clyde");
+        realNameMap.put("break", "Break");
+        realNameMap.put("drama", "Drama");
+        realNameMap.put("fighting", "파이팅 해야지");
+        realNameMap.put("firetruck", "소방차");
+        realNameMap.put("jamjam", "잼잼");
+        realNameMap.put("jana", "자나깨나");
+        realNameMap.put("likey", "LIKEY");
+        realNameMap.put("lovelee", "Love Lee");
+        realNameMap.put("lovemelikethis", "Love Me Like This");
+        realNameMap.put("pose", "Pose");
+        realNameMap.put("sclass", "특");
+        realNameMap.put("smoke", "Smoke");
+        realNameMap.put("thatthat", "That That");
+        realNameMap.put("zero", "Zero");
     }
 
     /**
@@ -103,5 +131,15 @@ public class SongLibrary {
      */
     public String getHintByTitle(String title) {
         return hintMap.getOrDefault(title, "힌트가 없습니다"); // 해당 제목의 힌트가 없으면 기본 메시지 반환
+    }
+
+    /**
+     * 프로그램 내 곡명에 해당하는 실제 곡명을 반환합니다.
+     *
+     * @param programName 프로그램 내에서 사용하는 곡명
+     * @return 실제 곡명, 매핑이 없을 경우 "Unknown Song" 반환
+     */
+    public String getRealSongName(String programName) {
+        return realNameMap.getOrDefault(programName, "Unknown Song");
     }
 }

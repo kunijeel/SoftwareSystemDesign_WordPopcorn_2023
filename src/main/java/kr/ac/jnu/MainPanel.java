@@ -156,7 +156,6 @@ public class MainPanel extends JPanel {
                             if (checkAnswer()) {
                                 ((WordPopcorn) SwingUtilities.getWindowAncestor(MainPanel.this)).showCard("SuccessPanel");
                                 savedLyrics = "";
-                                currentRound = 0;
                             } else {
                                 // 오답 처리
                                 boolean isLastRound = currentRound == roundsPlayed.length - 1;
@@ -486,5 +485,25 @@ public class MainPanel extends JPanel {
      */
     public SongLibrary getSongLibrary() {
         return songLibrary;
+    }
+
+    /**
+     * 현재 진행중인 라운드 번호를 반환하는 메소드입니다.
+     * 이 메소드는 게임의 현재 라운드 상태를 조회할 때 사용됩니다.
+     *
+     * @return 현재 라운드 번호
+     */
+    public int getCurrentRound() {
+        return currentRound;
+    }
+
+    /**
+     * 현재 진행중인 라운드 번호를 설정하는 메소드입니다.
+     * 이 메소드는 새 게임을 시작하거나, 라운드를 변경할 때 호출됩니다.
+     *
+     * @param currentRound 새로 설정할 라운드 번호
+     */
+    public void setCurrentRound(int currentRound) {
+        this.currentRound = currentRound;
     }
 }

@@ -36,7 +36,7 @@ public class FailPanel extends JPanel {
 
         btnBack = new JButton();
         UIUtils.setButtonGraphics(btnBack,"/Image/Button/back.png", 330, 95);
-        btnBack.setBounds(990, 655, 330, 90);
+        btnBack.setBounds(990, 655, 330, 95);
         btnBack.addActionListener(e -> {
             WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
 
@@ -52,7 +52,7 @@ public class FailPanel extends JPanel {
 
         btnSelectHint = new JButton();
         UIUtils.setButtonGraphics(btnSelectHint,"/Image/Button/selecthint.png", 330, 95);
-        btnSelectHint.setBounds(990, 655, 330, 90);
+        btnSelectHint.setBounds(990, 655, 330, 95);
         btnSelectHint.addActionListener(e -> {
             WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
             wordPopcorn.showCard("HintPanel"); // InitialPanel로 이동

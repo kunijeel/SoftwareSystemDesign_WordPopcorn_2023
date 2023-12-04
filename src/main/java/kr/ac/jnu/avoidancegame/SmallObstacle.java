@@ -131,6 +131,7 @@ public class SmallObstacle extends Obstacle {
         if (!gameFrame.isGameOver() && getBounds().intersects(player.getBounds())) {
             timer.stop();
             gameFrame.setGameOver();
+            gameFrame.stopItemSpawnTimer();
             CustomInfoDialog.showInfoDialog(gameFrame, "알림", "Game Over!", 40f, 400, 200);
             gameFrame.dispose();
         }

@@ -44,6 +44,8 @@ public class SongInfoPanel extends JPanel {
         btnStart.addActionListener(e -> {
             WordPopcorn wordPopcorn = (WordPopcorn) SwingUtilities.getWindowAncestor(this);
             ((MainPanel) wordPopcorn.getCardPanel().getComponent(3)).setMain(wordPopcorn.getCurrentSongName());
+            ((MainPanel) wordPopcorn.getCardPanel().getComponent(3)).setCurrentRound(0);
+            ((MainPanel) wordPopcorn.getCardPanel().getComponent(3)).updateRoundLabel();
             wordPopcorn.showCard("MainPanel");
         });
 

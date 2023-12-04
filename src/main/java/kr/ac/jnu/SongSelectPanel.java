@@ -104,7 +104,6 @@ public class SongSelectPanel extends JPanel {
 
         // 앨범 이미지 로드
         albumImages = new ImageIcon[]{
-                new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_eta.png"))),
                 new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_bonnie.png"))),
                 new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_break.png"))),
                 new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Cover/cover_drama.png"))),
@@ -124,7 +123,6 @@ public class SongSelectPanel extends JPanel {
 
         // 앨범 미리보기 이미지 경로 배열 초기화
         albumPreviewPaths = new String[]{
-                "/Image/Preview/preview_eta.png",
                 "/Image/Preview/preview_bonnie.png",
                 "/Image/Preview/preview_break.png",
                 "/Image/Preview/preview_drama.png",
