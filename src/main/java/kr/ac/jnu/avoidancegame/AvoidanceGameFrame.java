@@ -1,6 +1,7 @@
 package kr.ac.jnu.avoidancegame;
 
 import kr.ac.jnu.CustomInfoDialog;
+import kr.ac.jnu.MainPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class AvoidanceGameFrame extends JFrame {
+    private MainPanel mainPanel;
+
     private JLabel labelBackground;
     private JLabel labelCount;
     private Player player;
@@ -18,7 +21,8 @@ public class AvoidanceGameFrame extends JFrame {
     private Timer itemSpawnTimer;
     private boolean isGameOver = false; // 게임 오버 상태 관리
     private int collectedItems = 0;
-    public AvoidanceGameFrame() {
+    public AvoidanceGameFrame(MainPanel mainPanel) {
+        this.mainPanel = mainPanel;
         initSetting();
         initObject();
         initListener();
@@ -73,7 +77,9 @@ public class AvoidanceGameFrame extends JFrame {
             itemSpawnTimer.stop();
             timer.stop();
             this.setGameOver();
-            CustomInfoDialog.showInfoDialog(this, "알림", "Game Clear!", 40f, 400, 200);
+            String currentSongName = mainPanel.getCurrentSongName();
+            String hint = mainPanel.getSongLibrary().getHintByTitle(currentSongName);
+            CustomInfoDialog.showInfoDialog(this, "알림", hint, 30f, 500, 300);
             this.dispose();
         }
     }

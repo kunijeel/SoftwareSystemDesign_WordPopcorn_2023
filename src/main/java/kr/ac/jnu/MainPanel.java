@@ -246,7 +246,7 @@ public class MainPanel extends JPanel {
         btnBonus.setVisible(false);
         btnBonus.addActionListener(e -> {
             btnBonus.setVisible(false);
-            ((WordPopcorn)SwingUtilities.getWindowAncestor(this)).showCard("MiniGamePanel");
+            ((WordPopcorn)SwingUtilities.getWindowAncestor(this)).showCard("BonusHintPanel");
         });
 
         labelBoard = new JLabel();
@@ -440,7 +440,7 @@ public class MainPanel extends JPanel {
     public void updateRoundLabel() {
         ImageIcon iconRound = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Image/Sign/round" + (currentRound + 1) + ".png")));
         labelRound.setIcon(UIUtils.resizeImageIcon(iconRound, 240, 80));
-        btnBonus.setVisible(currentRound == 1);
+        btnBonus.setVisible(currentRound == 2);
     }
 
     /**
@@ -463,5 +463,18 @@ public class MainPanel extends JPanel {
         currentRound = 0;
 
         Arrays.fill(roundsPlayed, false);
+    }
+
+    /**
+     * 현재 선택된 노래의 제목을 반환하는 메서드입니다.
+     *
+     * @return 현재 선택된 노래의 제목
+     */
+    public String getCurrentSongName() {
+        return currentSongName;
+    }
+
+    public SongLibrary getSongLibrary() {
+        return songLibrary;
     }
 }
