@@ -1,7 +1,5 @@
 package kr.ac.jnu;
 
-import kr.ac.jnu.avoidancegame.AvoidanceGameFrame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -38,6 +36,9 @@ public class WordPopcorn extends JFrame {
      */
     private final BackgroundPanel backgroundPanel;
 
+    /**
+     * 로딩화면을 표시하는 패널입니다.
+     */
     private LoadingPanel loadingPanel;
 
     /**
@@ -90,6 +91,9 @@ public class WordPopcorn extends JFrame {
      */
     private final FailPanel failPanel;
 
+    /**
+     * 보너스 힌트를 안내하는 패널입니다.
+     */
     private final BonusHintPanel bonusHintPanel;
 
     /**
@@ -190,6 +194,11 @@ public class WordPopcorn extends JFrame {
         return this.cardPanel;
     }
 
+    /**
+     * 게임 시작 시 로딩 화면을 보여주는 메소드입니다.
+     * 이 메소드는 로딩 패널을 활성화한 후 일정 시간이 지나면 초기 패널로 전환하는 기능을 담당합니다.
+     * 로딩 화면은 사용자에게 게임이 준비되는 동안 기다리도록 하는 시각적 피드백을 제공합니다.
+     */
     public void startLoading() {
         // 로딩 패널을 보여줍니다.
         showCard("LoadingPanel");

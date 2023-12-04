@@ -5,15 +5,47 @@ import kr.ac.jnu.CustomInfoDialog;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.Random;
 
+/**
+ * Obstacle4 클래스는 분할되어 4개의 작은 장애물로 나뉘는 장애물을 구현합니다.
+ * 이 클래스는 Obstacle 클래스를 상속받습니다.
+ *
+ * @author Tam Oh
+ */
 public class Obstacle4 extends Obstacle {
+    /**
+     * 게임의 메인 프레임을 참조합니다.
+     */
     private AvoidanceGameFrame gameFrame;
+
+    /**
+     * 장애물 분할을 제어하는 타이머입니다.
+     */
     private Timer splitTimer;
+
+    /**
+     * 장애물의 이동 상태를 관리하는 변수입니다.
+     */
     private volatile boolean running = true;
+
+    /**
+     * 게임에서 플레이어 객체를 참조합니다.
+     */
     private Player player;
+
+    /**
+     * 게임 타이머를 참조합니다.
+     */
     private Timer timer;
 
+    /**
+     * Obstacle4 객체를 생성합니다.
+     *
+     * @param imagePath 장애물 이미지의 경로
+     * @param player 게임의 플레이어 객체
+     * @param gameFrame 게임의 메인 프레임
+     * @param gameTimer 게임의 타이머 객체
+     */
     public Obstacle4(String imagePath, Player player, AvoidanceGameFrame gameFrame, Timer gameTimer) {
         super(imagePath);
         this.player = player;
@@ -25,6 +57,9 @@ public class Obstacle4 extends Obstacle {
         startSplitTimer();
     }
 
+    /**
+     * 장애물의 초기 이동 방향을 설정합니다.
+     */
     private void initMovement() {
         int centerX = GAME_WIDTH / 2;
         int centerY = GAME_HEIGHT / 2;
@@ -34,6 +69,9 @@ public class Obstacle4 extends Obstacle {
         dy = (int) (speed * Math.sin(angle));
     }
 
+    /**
+     * 장애물의 움직임을 별도의 스레드에서 처리합니다.
+     */
     private void startMoving() {
         new Thread(() -> {
             while (running) {
@@ -49,12 +87,18 @@ public class Obstacle4 extends Obstacle {
         }).start();
     }
 
+    /**
+     * 일정 시간 후 장애물을 4개의 작은 장애물로 분할하는 타이머를 시작합니다.
+     */
     private void startSplitTimer() {
         splitTimer = new Timer(1000, e -> splitObstacle());
         splitTimer.setRepeats(false);
         splitTimer.start();
     }
 
+    /**
+     * 장애물을 분할하고 새로운 작은 장애물을 생성합니다.
+     */
     private void splitObstacle() {
         // 장애물을 4개로 분할하고 각각의 방향 설정
         running = false; // 원래 장애물의 이동을 중지
@@ -74,6 +118,12 @@ public class Obstacle4 extends Obstacle {
         });
     }
 
+    /**
+     * 장애물의 이동을 처리하고, 게임 오버 상태를 확인합니다.
+     *
+     * @throws IOException 파일 입출력 예외
+     * @throws FontFormatException 폰트 형식 예외
+     */
     @Override
     public void move() throws IOException, FontFormatException {
         x += dx;

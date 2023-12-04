@@ -70,6 +70,9 @@ public class MainPanel extends JPanel {
      */
     private JButton btnPlaySlow;
 
+    /**
+     * 보너스 힌트를 제공하기 위한 버튼입니다.
+     */
     private JButton btnBonus;
 
     /**
@@ -474,6 +477,13 @@ public class MainPanel extends JPanel {
         return currentSongName;
     }
 
+    /**
+     * 게임에 사용되는 노래 라이브러리 객체를 반환합니다.
+     * 이 메서드는 외부 클래스에서 노래 라이브러리에 접근할 필요가 있을 때 사용됩니다.
+     * 반환된 라이브러리 객체를 통해 게임 내에서 사용되는 노래 정보, 가사, 힌트 등을 조회하거나 처리할 수 있습니다.
+     *
+     * @return 현재 사용 중인 SongLibrary 객체
+     */
     public SongLibrary getSongLibrary() {
         return songLibrary;
     }
